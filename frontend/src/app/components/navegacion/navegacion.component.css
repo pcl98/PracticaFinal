@@ -6,7 +6,7 @@ nav.menu_principal ul {
     margin: 0px;
     padding: 0px;
     font-size: 20px;
-    text-align: center;
+    text-align: right;
 }
 
 nav.menu_principal ul > li{
@@ -19,8 +19,14 @@ nav.menu_principal ul > li{
 }
 
 nav.menu_principal ul > li > a {
+    display: flex;  
+    justify-content: center;  
+    width: 180px; 
+    height: 50px; 
     text-decoration: none;
     color: black;
+    font-size: 20px;
+    font-family: "Verdana", sans-serif;
 }
 
 select {
@@ -31,4 +37,6 @@ select {
     font-size: 20px;
     cursor: pointer;
     font-family: "Verdana", sans-serif;
+    width: 180px;
+    height: 50px
 }

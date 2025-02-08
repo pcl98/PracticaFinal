@@ -1,13 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
-import { CabeceraComponent } from "./components/cabecera/cabecera.component";
-import { NotificacionesComponent } from "./components/notificaciones/notificaciones.component";
-import { CommonModule } from '@angular/common';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { CalendarioComponent } from './components/calendario/calendario.component';
+import { PresencialComponent } from './components/presencial/presencial.component';
+import { OnlineComponent } from './components/online/online.component';
+import { ProfesoresComponent } from './components/profesores/profesores.component';
+import { NuestraHistoriaComponent } from './components/nuestra-historia/nuestra-historia.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
+import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/preguntas-frecuentes.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavegacionComponent, CabeceraComponent, NotificacionesComponent, CommonModule],
+  imports: [RouterOutlet, NavegacionComponent,InicioComponent,PresencialComponent, OnlineComponent,CalendarioComponent,ProfesoresComponent,NuestraHistoriaComponent,ContactoComponent,PreguntasFrecuentesComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
