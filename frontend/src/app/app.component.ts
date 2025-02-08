@@ -18,4 +18,10 @@ import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/
 })
 export class AppComponent {
   title = 'frontend';
+
+  mostrarVentanaNotificaciones = false;
+
+  mostrarNotificaciones() {
+    this.mostrarVentanaNotificaciones = true;
+  }
 }
