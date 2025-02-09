@@ -1,3 +1,20 @@
-    <!--<h1 class="border">Aguadulce</h1>
-    <h1 class="wave">Aguadulce</h1>-->
+
+<!--<h1 class="border">Aguadulce</h1>
+ <h1 class="wave">Aguadulce</h1>-->
+
+<div class="cabecera">
+    <!-- Logo en el centro -->
+    <img id="logo" src="assets/images/logo_nombre.png" alt="Logo">
+  
+    <!-- Barra de búsqueda y notificaciones -->
+    <div class="search-container">
+      <img id="noti" src="assets/images/noti_white.png" alt="Notificación" (click)="abrirNotificaciones()"> <!-- Icono de notificación -->
+      <input type="text" placeholder="Buscar..." class="search-input" />
+    </div>
+  </div>
+
+  <app-notificaciones 
+  [mostrarNotificaciones]="mostrarNotificaciones"
+  (mostrarNotificacionesChange)="mostrarNotificaciones = $event"></app-notificaciones>
+  
 

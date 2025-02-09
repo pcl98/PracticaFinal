@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
 h1{
@@ -26,4 +27,48 @@ h1{
         clip-path: polygon(0% 60%, 15% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%); 
     }
 
+
+/* Contenedor principal con position relative */
+.cabecera {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Estilo del logo */
+#logo {
+    position: relative;
+    left: 50%;  /* Coloca el logo en el centro */
+    top: 50%;
+    transform: translate(-50%, 0%);  /* Ajusta para centrarlo perfectamente */
+    width: 500px;  /* Ajusta el tamaño del logo */
+    height: auto;
+}
+
+
+/* Barra de búsqueda (a la derecha) */
+.search-container {
+    position: relative;
+    right: 10px;  /* Ajusta la distancia desde el borde derecho */
+    top: 50%;
+    transform: translate(75%, -150%);
+}
+
+/* Estilo de #noti (a la derecha) */
+#noti {
+    position: relative;
+    top: 50%;
+    transform: translate(-100%, 40%);
+    width: 50px;  /* Ajusta el tamaño del icono */
+    cursor: pointer;
+}
+
+.search-input {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;  /* O el ancho que prefieras */
 }
