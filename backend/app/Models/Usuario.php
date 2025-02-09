@@ -16,7 +16,7 @@ class Usuario extends Authenticatable
         'apellido',
         'nivel',
         'tipo_usuario',
-        'password',
+        'contraseña',
         'email',
     ];
 
