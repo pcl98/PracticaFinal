@@ -1,0 +1,9 @@
+
+.inicio {
+    background-image: url('/assets/images/fondo3.jpg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 100vh;
+    
+}
