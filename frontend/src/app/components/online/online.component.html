@@ -1,1 +1,37 @@
-<p>online works!</p>
+<div class="online">
+    <h1>ONLINE</h1>
+    <div class="filtro">
+        <label class = "labelfiltro1">Tipo de clases</label>
+        <div class="clases">
+            <input type="checkbox" id="online-chck" (change)="cambioCheckClase('online')" checked/>
+            <label for="online-chck">Online</label>
+        </div>
+        <div class="clases">
+            <input type="checkbox" id="presencial-chck" (change)="cambioCheckClase('presencial')"/>
+            <label for="presencial-chck">Presencial</label>
+        </div>
+        <label class = "labelfiltro2">Nivel de las clases</label>
+        <div class="dificultad">
+            <input type="checkbox" id="prin-chck" (change)="cambioCheckDificultad('principiante')" checked/>
+            <label for="online-chck">Principiante</label>
+        </div>
+        <div class="dificultad">
+            <input type="checkbox" id="inter-chck" (change)="cambioCheckDificultad('intermedio')"/>
+            <label for="presencial-chck">Intermedio</label>
+        </div>
+        <div class="dificultad">
+            <input type="checkbox" id="avan-chck" (change)="cambioCheckDificultad('avanzado')"/>
+            <label for="presencial-chck">Avanzado</label>
+        </div>
+
+    </div>
+    <button class="filtrar" (click)="filtrar()">Filtrar</button>
+    <div class="muestraClase">
+
+    </div>
+
+
+
+
+
+</div>
