@@ -15,7 +15,6 @@ import { CabeceraComponent } from "./components/cabecera/cabecera.component";
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, PreguntasFrecuentesComponent, CabeceraComponent],
-
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
