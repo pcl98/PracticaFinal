@@ -21,7 +21,7 @@ export class OnlineComponent {
   }
   
   ngOnInit() {
-    this.obtenerClases();
+    this.obtenerClases(); 
   }
 
   public cambioCheckClase(tipoclase:string){
