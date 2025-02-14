@@ -17,7 +17,7 @@ export class OnlineComponent {
   dificultad:string = '';
 
   constructor(private router: Router, private claseService: ClaseService) {
-    this.instrumento = 'Piano';
+    this.instrumento = 'Instrumento';
   }
   
   ngOnInit() {
@@ -66,15 +66,25 @@ export class OnlineComponent {
   private obtenerClases() {
     this.claseService.getClases().subscribe((data: any[]) => {
       this.clases = data;
+      this.filtrar(); 
     });
   }
 
   public getClasesFiltro():any[]{
     let clases_aux: any[] = [];
     this.clases.forEach(clase => {
-      if (clase.instrumento === this.instrumento && clase.dificultad == this.dificultad){
-        clases_aux.push(clase)
-      }
+        if (clase.instrumento === this.instrumento && clase.dificultad == this.dificultad){
+          clases_aux.push(clase)
+        }
+        if (clase.instrumento === this.instrumento && this.dificultad === 'none'){
+          clases_aux.push(clase)
+        }
+        if(clase.dificultad  === this.dificultad && this.instrumento === 'Instrumento'){
+          clases_aux.push(clase)
+        }
+        if(this.dificultad === 'none' && this.instrumento === 'Instrumento'){
+          clases_aux.push(clase)
+        }
     });  
     return clases_aux;
   }
@@ -92,8 +102,11 @@ export class OnlineComponent {
     else if(avanCheck.checked){
       return 'avanzado';
     }
-    return 'principiante';
+    return 'none';
   }
 
-  
+  public getInstrumento(){
+    const selectInstrumento = document.getElementById('instrumentos') as HTMLSelectElement;
+    this.instrumento = selectInstrumento.value;
+  }
 }
