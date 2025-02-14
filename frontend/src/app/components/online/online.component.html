@@ -12,7 +12,7 @@
         </div>
         <label class = "labelfiltro2">Nivel de las clases</label>
         <div class="dificultad">
-            <input type="checkbox" id="prin-chck" (change)="cambioCheckDificultad('principiante')" checked/>
+            <input type="checkbox" id="prin-chck" (change)="cambioCheckDificultad('principiante')">
             <label for="online-chck">Principiante</label>
         </div>
         <div class="dificultad">
@@ -25,11 +25,43 @@
         </div>
 
     </div>
+    <select id = "instrumentos" (change)="getInstrumento()">
+        <option value = "Instrumento">Instrumento</option>
+        <option value = "Piano">Piano</option>
+        <option value = "Guitarra">Guitarra</option>
+        <option value = "Violín">Violín</option>
+        <option value = "Batería">Batería</option>
+        <option value = "Canto">Canto</option>
+        <option value = "Canto">Bajo</option>
+        <option value = "Teclado">Teclado</option>
+        <option value = "Flauta">Flauta</option>
+        <option value = "Percusión">Percusión</option>
+        <option value = "Canto">Canto</option>
+    </select>
     <button class="filtrar" (click)="filtrar()">Filtrar</button>
-    <div class="muestraClase">
+    <div class="muestraClase"> 
         @for(clase of clasesFiltradas ; track $index){
             <h3>Clase de {{ clase.instrumento }}</h3>
             <p>Precio: {{ clase.precio }}</p>
+            <p>Duración: {{ clase.duracion }}</p>
+            <p>Precio: {{ clase.precio }}€</p>
+            
+            @switch(clase.instrumento){
+                @case ('Guitarra'){
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Classical_Guitar_two_views.jpg/180px-Classical_Guitar_two_views.jpg" class = "instrumentoImagen">
+            
+                }
+                @case('Piano'){
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Steinway_%26_Sons_concert_grand_piano%2C_model_D-274%2C_manufactured_at_Steinway%27s_factory_in_Hamburg%2C_Germany.png/200px-Steinway_%26_Sons_concert_grand_piano%2C_model_D-274%2C_manufactured_at_Steinway%27s_factory_in_Hamburg%2C_Germany.png" class = "instrumentoImagen">
+                
+                }
+                @default{
+                    <img src="https://media.istockphoto.com/id/894058154/es/foto/instrumentos-musical.jpg?s=612x612&w=0&k=20&c=WjTwmZPcFkGuAU7DAjpToSMe5baR8XJvHkyg3jMxkWg=" class = "instrumentoImagen">
+                }
+            
+            }
+            <button class="Subcribir">Suscribirme</button>
+            <hr>
         }
     </div>
 
