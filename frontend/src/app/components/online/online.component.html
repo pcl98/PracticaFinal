@@ -39,7 +39,7 @@
         <option value = "Canto">Canto</option>
     </select>
     <button class="filtrar" (click)="filtrar()">Filtrar</button>
-    <div class="muestraClase">
+    <div class="muestraClase"> 
         @for(clase of clasesFiltradas ; track $index){
             <h3>Clase de {{ clase.instrumento }}</h3>
             <p>Precio: {{ clase.precio }}</p>
