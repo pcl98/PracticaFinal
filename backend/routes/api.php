@@ -16,12 +16,6 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::middleware('auth:api')->get('user', [AuthController::class, 'user']);
 
-
-// Rutas de autenticación
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
-Route::middleware('auth:api')->get('user', [AuthController::class, 'user']);
-
 Route::get('/clase', [ClaseController::class, 'index']);
 Route::post('/clase', [ClaseController::class, 'store']);
 Route::delete('/clase/{id}', [ClaseController::class, 'destroy']);
