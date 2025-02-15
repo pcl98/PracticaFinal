@@ -1,3 +1,7 @@
-<div class="inicio"></div>
+<div class="inicio">
+    @if(isUserAuthenticated) {
+        <h1>¡Hola, {{nombreUsuario}}!</h1>
+    }    
+</div>
 
 

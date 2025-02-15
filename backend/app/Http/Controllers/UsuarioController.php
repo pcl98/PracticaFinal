@@ -92,7 +92,7 @@ class UsuarioController extends Controller
             'apellido' => 'string|max:255',
             'nivel' => 'integer',
             'tipo_usuario' => 'string|max:50',
-            'password' => 'string|min:6',
+            'contraseña' => 'string|min:6',
             'email' => 'email|unique:USUARIO,email,' . $usuario->id,
         ]);
 
