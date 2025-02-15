@@ -18,7 +18,6 @@ import { LoginComponent } from './components/login/login.component';
   imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
             CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, 
             PreguntasFrecuentesComponent, CabeceraComponent, LoginComponent],
-
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

@@ -1,0 +1,59 @@
+
+.presencial {
+    background-image: url('/assets/images/fondo3.jpg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 100vh;
+    font-family: "Verdana", sans-serif;
+}
+
+.filtro{
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    top: 100px;
+    left: 200px;
+    border-radius: 20px;
+}
+
+.clases {
+    position: relative;
+    top: 15px;
+    left: 10px;
+}
+
+.filtrar{
+    position: relative;
+    left: 400px;
+    top: 80px;
+    font-family: "Verdana", sans-serif;
+}
+.dificultad{
+    position: relative;
+    top: 20px;
+    left: 10px;
+}
+.labelfiltro1{
+    position: relative;
+    top: 10px;
+    left: 5px;
+    text-decoration: underline;
+}
+.labelfiltro2{
+    position: relative;
+    top: 15px;
+    left: 5px;
+    text-decoration: underline;
+}
+
+.muestraClase{
+    background-color: white;
+    width: 1000px;
+    height: 700px;
+    position: relative;
+    top: -150px;
+    left: 600px;
+    border-radius: 20px;
+}
