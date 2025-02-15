@@ -6,11 +6,46 @@
     <!-- Logo en el centro -->
     <img id="logo" src="assets/images/logo_nombre.png" alt="Logo">
   
-    <!-- Barra de búsqueda y notificaciones -->
-    <div class="search-container">
-      <img id="noti" src="assets/images/noti_white.png" alt="Notificación" (click)="abrirNotificaciones()"> <!-- Icono de notificación -->
-      <input type="text" placeholder="Buscar..." class="search-input" />
-    </div>
+
+    <div class = "right-container">
+      <!-- Icono de notificación -->
+      @if (isUserAuthenticated) 
+      {
+        <img id="noti" src="assets/images/noti_white.png" alt="Notificación"
+        (click)="abrirNotificaciones()">
+      }
+      
+      <div class="profile-menu">
+        <button (click)="toggleMenu()">
+          <img id="profile" src="assets/images/profile_icon.png" alt="Iniciar sesión">
+        </button>
+
+        @if (menuOpen) {
+          <ul class="dropdown">
+            @if (!isUserAuthenticated) {
+              <li (click)="redirigirLogin()">Iniciar sesión</li>
+              <li><a routerLink="/register">Registrarse</a></li>
+            }
+            @else {
+              <li><a routerLink="/perfil">Ver perfil</a></li>
+              <li (click)="logout()">Cerrar sesión</li>
+            }
+          </ul>
+        }
+        
+      </div> 
+
+      <!-- Barra de búsqueda -->
+      <div class="search-container">
+        <input type="text" placeholder="Buscar..." class="search-input" />
+      </div>
+
+      
+
+       
+      
+    </div>    
+    
   </div>
 
   <app-notificaciones 

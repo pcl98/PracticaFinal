@@ -45,7 +45,7 @@ class UsuarioController extends Controller
 
         // Cifrar la contraseña antes de guardarla
         $data = $request->all();
-        //$data['contraseña'] = bcrypt($data['contraseña']); // Asegúrate de cifrar la contraseña
+        $data['contraseña'] = bcrypt($data['contraseña']);
 
         $usuario = Usuario::create($data);
 
@@ -92,7 +92,7 @@ class UsuarioController extends Controller
             'apellido' => 'string|max:255',
             'nivel' => 'integer',
             'tipo_usuario' => 'string|max:50',
-            'password' => 'string|min:6',
+            'contraseña' => 'string|min:6',
             'email' => 'email|unique:USUARIO,email,' . $usuario->id,
         ]);
 

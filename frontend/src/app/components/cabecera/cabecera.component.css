@@ -1,49 +1,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;700&display=swap');
 
-/* Contenedor principal con position relative */
+/* Contenedor general */
 .cabecera {
-    position: relative;
+    display: flex;
+    justify-content: space-between; /* Espacio entre logo y el contenido derecho */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: white;
     width: 100%;
-    padding: 10px;
-}
-
-/* Estilo del logo */
-#logo {
-    position: relative;
-    left: 50%;  /* Coloca el logo en el centro */
-    top: 50%;
-    transform: translate(-50%, 0%);  /* Ajusta para centrarlo perfectamente */
-    width: 500px;  /* Ajusta el tamaño del logo */
+  }
+  
+  /* Logo */
+  #logo {
+    width: 200px;
     height: auto;
-}
-
-
-/* Barra de búsqueda (a la derecha) */
-.search-container {
-    position: relative;
-    right: 10px;  /* Ajusta la distancia desde el borde derecho */
-    top: 50%;
-    transform: translate(75%, -150%);
-}
-
-/* Estilo de #noti (a la derecha) */
-#noti {
-    position: relative;
-    top: 50%;
-    transform: translate(-100%, 40%);
-    width: 50px;  /* Ajusta el tamaño del icono */
-    cursor: pointer;
-}
-
-.search-input {
+  }
+  
+  /* Contenedor derecho */
+  .right-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre elementos */
+    margin-left: auto; /* Empuja el contenedor a la derecha */
+  }
+  
+  /* Barra de búsqueda */
+  .search-container {
+    display: flex;
+  }
+  
+  .search-input {
     padding: 8px 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 600px;  /* O el ancho que prefieras */
-}
+    width: 200px;
+  }
+  
+  /* Iconos */
+  #noti, #profile {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  /* Menú desplegable */
+  .profile-menu {
+    position: relative;
+  }
+
+  .profile-menu button {
+    background: none;   /* Elimina el fondo */
+    border: none;       /* Quita el borde */
+    padding: 0;         /* Evita márgenes internos */
+    cursor: pointer;    /* Mantiene el cursor de interacción */
+    display: flex;      /* Asegura que solo el icono se muestre */
+    align-items: center;
+  }
+  
+  .profile-menu button:focus {
+    outline: none;      /* Elimina el contorno al hacer click */
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgb(84, 84, 84);
+    border-radius: 0px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px;
+    width: 150px;
+  }
+  
+  .dropdown li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown li:hover {
+    background: #f0f0f0;
+  }
+  
+  
+
 /*
 h1{
     font-family:'Work Sans';
