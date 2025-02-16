@@ -1,3 +1,4 @@
+import 'localstorage-polyfill';
 import {
   AngularNodeAppEngine,
   createNodeRequestHandler,

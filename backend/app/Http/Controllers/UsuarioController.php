@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Usuario;
 
 class UsuarioController extends Controller
@@ -29,20 +30,28 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        // Reiniciar la secuencia del campo id si es necesario
+        DB::statement('SELECT setval(\'usuario_id_seq\', (SELECT MAX(id) FROM usuario));');
+
         // Validar datos antes del registro
         $request->validate([
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'nivel' => 'required|integer',
             'tipo_usuario' => 'required|string|max:50',
-            'password' => 'required|string|min:6',
-            'email' => 'required|email|unique:USUARIO,email',
+            'contraseña' => 'required|string|min:6',
+            'email' => 'required|email|unique:usuario,email',
         ]);
 
-        $usuario = Usuario::create($request->all());
+        // Cifrar la contraseña antes de guardarla
+        $data = $request->all();
+        //$data['contraseña'] = bcrypt($data['contraseña']); // Asegúrate de cifrar la contraseña
+
+        $usuario = Usuario::create($data);
 
         return response()->json(['message' => 'Usuario creado correctamente', 'usuario' => $usuario], 201);
     }
+
 
 
     /**
@@ -83,7 +92,7 @@ class UsuarioController extends Controller
             'apellido' => 'string|max:255',
             'nivel' => 'integer',
             'tipo_usuario' => 'string|max:50',
-            'password' => 'string|min:6',
+            'contraseña' => 'string|min:6',
             'email' => 'email|unique:USUARIO,email,' . $usuario->id,
         ]);
 

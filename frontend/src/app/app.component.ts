@@ -12,13 +12,15 @@ import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/
 import { PieComponent } from './components/pie/pie.component';
 
 import { CabeceraComponent } from "./components/cabecera/cabecera.component";
+import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, PreguntasFrecuentesComponent, PieComponent, CabeceraComponent],
-
+  imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
+            CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, 
+            PreguntasFrecuentesComponent, CabeceraComponent, LoginComponent, PieComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'frontend';
