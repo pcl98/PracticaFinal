@@ -9,12 +9,13 @@ import { ProfesoresComponent } from './components/profesores/profesores.componen
 import { NuestraHistoriaComponent } from './components/nuestra-historia/nuestra-historia.component';
 import { ContactoComponent } from './components/contacto/contacto.component';
 import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/preguntas-frecuentes.component';
+import { PieComponent } from './components/pie/pie.component';
 
 import { CabeceraComponent } from "./components/cabecera/cabecera.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, PreguntasFrecuentesComponent, CabeceraComponent],
+  imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, PreguntasFrecuentesComponent, PieComponent, CabeceraComponent],
 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
