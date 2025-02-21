@@ -18,14 +18,6 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Crear nuevo usuario
      */
     public function store(Request $request)
@@ -45,13 +37,12 @@ class UsuarioController extends Controller
 
         // Cifrar la contraseña antes de guardarla
         $data = $request->all();
-        //$data['contraseña'] = bcrypt($data['contraseña']); // Asegúrate de cifrar la contraseña
+        //$data['contraseña'] = bcrypt($data['contraseña']);
 
         $usuario = Usuario::create($data);
 
         return response()->json(['message' => 'Usuario creado correctamente', 'usuario' => $usuario], 201);
     }
-
 
 
     /**

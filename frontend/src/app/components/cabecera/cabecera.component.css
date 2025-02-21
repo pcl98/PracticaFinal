@@ -3,9 +3,8 @@
 /* Contenedor general */
 .cabecera {
     display: flex;
-    justify-content: space-between; /* Espacio entre logo y el contenido derecho */
+    justify-content: center; /* Espacio entre logo y el contenido derecho */
     align-items: center;
-    padding: 10px 20px;
     background-color: #ffffff;
     color: white;
     width: 100%;
@@ -13,8 +12,10 @@
   
   /* Logo */
   #logo {
-    width: 200px;
+    display: block;
+    width: 300px;
     height: auto;
+    margin: 0 auto;
   }
   
   /* Contenedor derecho */
@@ -23,6 +24,7 @@
     align-items: center;
     gap: 15px; /* Espacio entre elementos */
     margin-left: auto; /* Empuja el contenedor a la derecha */
+    justify-content: flex-end;
   }
   
   /* Barra de búsqueda */

@@ -33,7 +33,15 @@ class Usuario extends Authenticatable implements JWTSubject
 
     public function getJWTCustomClaims()
     {
-        return []; // Puedes agregar más datos al token si lo necesitas
+        return [];
+    }
+
+    /*
+     * Relación con la tabla usuario_estudiante
+    */
+    public function estudiante() 
+    {
+        return $this->hasOne(UsuarioEstudiante::class, 'id', 'id');
     }
 
     // Desactivamos timestamps
