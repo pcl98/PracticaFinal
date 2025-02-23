@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clase;
+use App\Models\ClasePresencial;
+use App\Models\ClaseOnline;
 use Illuminate\Http\Request;
 
 class ClaseController extends Controller
@@ -88,5 +90,19 @@ class ClaseController extends Controller
         $clase->delete();
 
         return response()->json(['message' => 'Clase eliminada']);
+    }
+
+    // Obtener todas las clases presenciales
+    public function getClasesPresenciales()
+    {
+        $clases = ClasePresencial::all();
+        return response()->json($clases);
+    }
+
+    // Obtener todas las clases online
+    public function getClasesOnline()
+    {
+        $clases = ClaseOnline::all();
+        return response()->json($clases);
     }
 }

@@ -27,7 +27,7 @@
               <li><a routerLink="/register">Registrarse</a></li>
             }
             @else {
-              <li><a routerLink="/perfil">Ver perfil</a></li>
+              <li (click)="redirigirPerfil()">Ver perfil</li>
               <li (click)="logout()">Cerrar sesión</li>
             }
           </ul>

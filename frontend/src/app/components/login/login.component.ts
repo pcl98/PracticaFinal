@@ -13,14 +13,13 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-  contraseña = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    this.contraseña = this.password;  // Renombramos "password" a "contraseña" para el backend
+    const contraseña = this.password;  // Renombramos "password" a "contraseña" para el backend
 
-    this.authService.login(this.email, this.contraseña).subscribe({
+    this.authService.login(this.email, contraseña).subscribe({
       next: (response) => {
         console.log('Inicio de sesión exitoso:', response);
         this.authService.setToken(response.access_token);

@@ -31,7 +31,14 @@ export class CabeceraComponent {
 
   // Redirigir a la página del login
   redirigirLogin():void {
+    this.menuOpen = !this.menuOpen;
     this.router.navigate(['/login']);
+  }
+
+  // Redirigir a la página del perfil
+  redirigirPerfil():void {
+    this.menuOpen = !this.menuOpen;
+    this.router.navigate(['/perfil']);
   }
 
   // Comprobar si el usuario está autenticado

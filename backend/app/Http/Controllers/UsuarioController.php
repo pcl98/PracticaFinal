@@ -13,16 +13,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::paginate(1);
         return response()->json(($usuarios));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,13 +37,12 @@ class UsuarioController extends Controller
 
         // Cifrar la contraseña antes de guardarla
         $data = $request->all();
-        //$data['contraseña'] = bcrypt($data['contraseña']); // Asegúrate de cifrar la contraseña
+        //$data['contraseña'] = bcrypt($data['contraseña']);
 
         $usuario = Usuario::create($data);
 
         return response()->json(['message' => 'Usuario creado correctamente', 'usuario' => $usuario], 201);
     }
-
 
 
     /**
@@ -69,14 +60,6 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Actualizar un usuario
      */
     public function update(Request $request, $id)
@@ -88,12 +71,12 @@ class UsuarioController extends Controller
         }
 
         $request->validate([
-            'nombre' => 'string|max:255',
-            'apellido' => 'string|max:255',
-            'nivel' => 'integer',
-            'tipo_usuario' => 'string|max:50',
-            'contraseña' => 'string|min:6',
-            'email' => 'email|unique:USUARIO,email,' . $usuario->id,
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'nivel' => 'required|integer',
+            'tipo_usuario' => 'required|string|max:50',
+            'contraseña' => 'required|string|min:6',
+            'email' => 'required|email|unique:usuario,email,' . $usuario->id,
         ]);
 
         $usuario->update($request->all());
@@ -115,6 +98,60 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return response()->json(['message' => 'Usuario eliminado correctamente']);
+    }
+
+    /**
+     * Búsqueda de usuarios
+     */
+    public function search(Request $request)
+    {
+        $query = Usuario::query();
+
+        if ($request->has('nombre')) {
+            $query->where('nombre', 'like', '%' . $request->nombre . '%');
+        }
+
+        if ($request->has('apellido')) {
+            $query->where('apellido', 'like', '%' . $request->apellido . '%');
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+
+        if ($request->has('tipo_usuario')) {
+            $query->where('tipo_usuario', $request->tipo_usuario);
+        }
+
+        if ($request->has('nivel')) {
+            $query->where('nivel', $request->nivel);
+        }
+
+        $usuarios = $query->get();
+
+        return response()->json($usuarios);
+    }
+
+    /**
+     * Búsqueda avanzada de usuarios
+     */
+    public function advancedSearch(Request $request)
+    {
+        // Validar que se haya enviado el parámetro 'query'
+        $request->validate([
+            'query' => 'required|string|min:1',
+        ]);
+
+        $query = $request->input('query'); // Texto de búsqueda
+
+        // Realizar la búsqueda en múltiples campos
+        $usuarios = Usuario::where('nombre', 'like', "%$query%")
+            ->orWhere('apellido', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%")
+            ->orWhere('tipo_usuario', 'like', "%$query%")
+            ->paginate(10);
+
+        return response()->json($usuarios);
     }
 
 }
