@@ -14,8 +14,8 @@ class ClaseController extends Controller
      */
     public function index()
     {
-        $clases = Clase::all(); // Obtiene todas las clases
-        return response()->json($clases); // Devuelve en JSON
+        $clases = Clase::paginate(10);
+        return response()->json($clases);
     }
 
     /**

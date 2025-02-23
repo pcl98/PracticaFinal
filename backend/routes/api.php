@@ -9,12 +9,13 @@ use App\Http\Controllers\UsuarioEstudianteController;
 
 // Rutas para usuarios
 Route::get('/usuarios', [UsuarioController::class, 'index']);
+Route::get('/usuarios/search-by-fields', [UsuarioController::class, 'searchByFields']);
+Route::get('/usuarios/search', [UsuarioController::class, 'search']);
 Route::get('/usuarios/{id}', [UsuarioController::class, 'show']);
 Route::post('/usuarios', [UsuarioController::class, 'store']);
 Route::patch('/usuarios/{id}', [UsuarioController::class, 'update']);
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']);
-Route::get('usuarios/search', [UsuarioController::class, 'search']);
-Route::get('usuarios/advanced-search', [UsuarioController::class, 'advancedSearch']);
+
 
 
 // Rutas de autenticación
