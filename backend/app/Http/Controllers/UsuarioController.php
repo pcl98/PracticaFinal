@@ -101,55 +101,67 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Búsqueda de usuarios
+     * Búsqueda por campos específicos.
      */
-    public function search(Request $request)
+    public function searchByFields(Request $request)
     {
+        $request->validate([
+            'nombre' => 'sometimes|string|max:255',
+            'apellido' => 'sometimes|string|max:255',
+            'nivel' => 'sometimes|integer',
+            'tipo_usuario' => 'sometimes|string|max:50',
+            'email' => 'sometimes|email',
+        ]);
+
         $query = Usuario::query();
 
+        // Filtros opcionales
         if ($request->has('nombre')) {
-            $query->where('nombre', 'like', '%' . $request->nombre . '%');
+            $query->where('nombre', 'ilike', '%' . $request->nombre . '%');
         }
 
         if ($request->has('apellido')) {
-            $query->where('apellido', 'like', '%' . $request->apellido . '%');
+            $query->where('apellido', 'ilike', '%' . $request->apellido . '%');
         }
 
         if ($request->has('email')) {
-            $query->where('email', 'like', '%' . $request->email . '%');
+            $query->where('email', 'ilike', '%' . $request->email . '%');
         }
 
         if ($request->has('tipo_usuario')) {
-            $query->where('tipo_usuario', $request->tipo_usuario);
+            $query->where('tipo_usuario', 'ilike', '%' . $request->tipo_usuario . '%');
         }
 
         if ($request->has('nivel')) {
-            $query->where('nivel', $request->nivel);
+            $nivel = (int)$request->nivel; // Convierte a entero
+            $query->where('nivel', $nivel);
         }
 
-        $usuarios = $query->get();
+        $usuarios = $query->paginate(10);
 
         return response()->json($usuarios);
     }
 
+
     /**
-     * Búsqueda avanzada de usuarios
+     * Búsqueda completa en todos los campos.
      */
-    public function advancedSearch(Request $request)
+    public function search(Request $request)
     {
-        // Validar que se haya enviado el parámetro 'query'
         $request->validate([
-            'query' => 'required|string|min:1',
+            'query' => 'required|string|min:1', // Texto de búsqueda
         ]);
 
         $query = $request->input('query'); // Texto de búsqueda
+        $perPage = $request->get('per_page', 10); // Paginación
 
-        // Realizar la búsqueda en múltiples campos
-        $usuarios = Usuario::where('nombre', 'like', "%$query%")
-            ->orWhere('apellido', 'like', "%$query%")
-            ->orWhere('email', 'like', "%$query%")
-            ->orWhere('tipo_usuario', 'like', "%$query%")
-            ->paginate(10);
+        // Búsqueda en todos los campos
+        $usuarios = Usuario::where('nombre', 'ilike', "%$query%")
+            ->orWhere('apellido', 'ilike', "%$query%")
+            ->orWhere('email', 'ilike', "%$query%")
+            ->orWhere('tipo_usuario', 'ilike', "%$query%")
+            ->orWhere('nivel', 'ilike', "%$query%")
+            ->paginate($perPage);
 
         return response()->json($usuarios);
     }
