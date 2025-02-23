@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Para iniciar sesión
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Usuario extends Authenticatable implements JWTSubject
 {
     use HasFactory;
+    //use SoftDeletes;
 
     protected $table = 'usuario';
 
@@ -20,6 +22,10 @@ class Usuario extends Authenticatable implements JWTSubject
         'contraseña',
         'email',
     ];
+
+    /*protected $hidden = [
+        'contraseña', // Oculta la contraseña en las respuestas JSON
+    ];*/
 
     // Mutador para el hashing de contraseñas
     /*public function setPasswordAttribute($value)
