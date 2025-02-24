@@ -1,1 +1,6 @@
 <p>calendario works!</p>
+<form (ngSubmit)= "submit()" >
+<input [(ngModel)]="persona.nombre" #nombre = "ngModel" >
+<input [(ngModel)]="persona.apellido" #apellido = "ngModel" name = "apellido">
+<input type = "submit">
+</form>

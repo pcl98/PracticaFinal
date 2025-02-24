@@ -44,6 +44,4 @@ class Usuario extends Authenticatable implements JWTSubject
         return $this->hasOne(UsuarioEstudiante::class, 'id', 'id');
     }
 
-    // Desactivamos timestamps
-    public $timestamps = false;
 }
