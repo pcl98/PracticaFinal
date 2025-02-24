@@ -17,5 +17,12 @@ class ClaseOnline extends Model
         'titulo',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
+
+    /*
+     * Relación con la tabla clase
+    */
+    public function clase() {
+        return $this->belongsTo(Clase::class, 'id', 'id');
+    }
 }
