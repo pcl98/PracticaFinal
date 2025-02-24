@@ -20,5 +20,5 @@ class Clase extends Model
         'profesor_id',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 }

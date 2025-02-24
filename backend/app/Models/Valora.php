@@ -19,5 +19,4 @@ class Valora extends Model
         'califiacion',
     ];
 
-    public $timestamps = false;
 }
