@@ -92,6 +92,75 @@ class ClaseController extends Controller
         return response()->json(['message' => 'Clase eliminada']);
     }
 
+
+    /**
+     * Búsqueda por campos específicos
+     */
+    public function searchByFields(Request $request)
+    {
+        $request->validate([
+            'instrumento' => 'sometimes|string|max:255',
+            'dificultad' => 'sometimes|string|max:50',
+            'duracion' => 'sometimes|integer',
+            'max_alumnos' => 'sometimes|integer',
+            'precio' => 'sometimes|numeric',
+            'profesor_id' => 'sometimes|integer|exists:usuario,id',
+        ]);
+
+        $query = Clase::query();
+
+        if ($request->has('instrumento')) {
+            $query->where('instrumento', 'ilike', '%' . $request->instrumento . '%');
+        }
+
+        if ($request->has('dificultad')) {
+            $query->where('dificultad', 'ilike', '%' . $request->dificultad . '%');
+        }
+
+        if ($request->has('duracion')) {
+            $query->where('duracion', $request->duracion);
+        }
+
+        if ($request->has('max_alumnos')) {
+            $query->where('max_alumnos', $request->max_alumnos);
+        }
+
+        if ($request->has('precio')) {
+            $query->where('precio', $request->precio);
+        }
+
+        if ($request->has('profesor_id')) {
+            $query->where('profesor_id', $request->profesor_id);
+        }
+
+        $clases = $query->paginate(10);
+
+        return response()->json($clases);
+    }
+
+
+    /**
+     * Búsqueda completa en todos los campos.
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string|min:1', // Texto de búsqueda
+        ]);
+
+        $query = $request->input('query'); // Texto de búsqueda
+
+        // Búsqueda en múltiples campos
+        $clases = Clase::where('instrumento', 'ilike', "%$query%")
+            ->orWhere('dificultad', 'ilike', "%$query%")
+            ->orWhere('duracion', 'ilike', "%$query%")
+            ->orWhere('max_alumnos', 'ilike', "%$query%")
+            ->orWhere('precio', 'ilike', "%$query%")
+            ->paginate(10);
+
+        return response()->json($clases);
+    }
+
     // Obtener todas las clases presenciales
     public function getClasesPresenciales()
     {

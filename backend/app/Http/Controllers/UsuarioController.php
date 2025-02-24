@@ -115,7 +115,6 @@ class UsuarioController extends Controller
 
         $query = Usuario::query();
 
-        // Filtros opcionales
         if ($request->has('nombre')) {
             $query->where('nombre', 'ilike', '%' . $request->nombre . '%');
         }
@@ -153,7 +152,6 @@ class UsuarioController extends Controller
         ]);
 
         $query = $request->input('query'); // Texto de búsqueda
-        $perPage = $request->get('per_page', 10); // Paginación
 
         // Búsqueda en todos los campos
         $usuarios = Usuario::where('nombre', 'ilike', "%$query%")
@@ -161,7 +159,7 @@ class UsuarioController extends Controller
             ->orWhere('email', 'ilike', "%$query%")
             ->orWhere('tipo_usuario', 'ilike', "%$query%")
             ->orWhere('nivel', 'ilike', "%$query%")
-            ->paginate($perPage);
+            ->paginate(10);
 
         return response()->json($usuarios);
     }
