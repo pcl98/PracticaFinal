@@ -16,7 +16,7 @@ class ClasePresencial extends Model
         'ubicacion',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     /*
      * Relación con la tabla clase
