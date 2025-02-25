@@ -2,65 +2,147 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UsuarioEstudiante;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\UsuarioEstudiante;
 
 class UsuarioEstudianteController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Devolver todos los usuarios estudiantes
      */
     public function index()
     {
-        $usuarios = UsuarioEstudiante::all();
-        return response()->json(($usuarios));
+        $usuariosEstudiantes = UsuarioEstudiante::paginate(10);
+        return response()->json($usuariosEstudiantes);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Crear nuevo usuario estudiante
      */
     public function store(Request $request)
     {
-        //
+        // Reiniciar la secuencia del campo id si es necesario
+        DB::statement('SELECT setval(\'usuario_estudiante_id_seq\', (SELECT MAX(id) FROM usuario_estudiante));');
+
+        // Validar datos antes del registro
+        $request->validate([
+            'dni' => 'required|string|max:20|unique:usuario_estudiante,dni',
+            'id' => 'required|integer|unique:usuario_estudiante,id',
+            'historial_clases' => 'nullable|string',
+            'lecciones_completadas' => 'nullable|integer',
+        ]);
+
+        $usuarioEstudiante = UsuarioEstudiante::create($request->all());
+
+        return response()->json(['message' => 'Usuario estudiante creado correctamente', 'usuario_estudiante' => $usuarioEstudiante], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Devolver un usuario estudiante específico
      */
-    public function show(UsuarioEstudiante $usuarioEstudiante)
+    public function show(string $id)
     {
-        //
+        $usuarioEstudiante = UsuarioEstudiante::find($id);
+
+        if (!$usuarioEstudiante) {
+            return response()->json(['message' => 'Usuario estudiante no encontrado'], 404);
+        }
+
+        return response()->json($usuarioEstudiante);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Actualizar un usuario estudiante
      */
-    public function edit(UsuarioEstudiante $usuarioEstudiante)
+    public function update(Request $request, $id)
     {
-        //
+        $usuarioEstudiante = UsuarioEstudiante::find($id);
+
+        if (!$usuarioEstudiante) {
+            return response()->json(['message' => 'Usuario estudiante no encontrado'], 404);
+        }
+
+        $request->validate([
+            'dni' => 'sometimes|string|max:20|unique:usuario_estudiante,dni,' . $usuarioEstudiante->id,
+            'historial_clases' => 'nullable|string',
+            'lecciones_completadas' => 'nullable|integer',
+        ]);
+
+        $usuarioEstudiante->update($request->all());
+
+        return response()->json(['message' => 'Usuario estudiante actualizado correctamente', 'usuario_estudiante' => $usuarioEstudiante]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Eliminar un usuario estudiante
      */
-    public function update(Request $request, UsuarioEstudiante $usuarioEstudiante)
+    public function destroy($id)
     {
-        //
+        $usuarioEstudiante = UsuarioEstudiante::find($id);
+
+        if (!$usuarioEstudiante) {
+            return response()->json(['message' => 'Usuario estudiante no encontrado'], 404);
+        }
+
+        $usuarioEstudiante->delete();
+
+        return response()->json(['message' => 'Usuario estudiante eliminado correctamente']);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Búsqueda por campos específicos
      */
-    public function destroy(UsuarioEstudiante $usuarioEstudiante)
+    public function searchByFields(Request $request)
     {
-        //
+        $request->validate([
+            'dni' => 'sometimes|string|max:20',
+            'id' => 'sometimes|integer',
+            'historial_clases' => 'nullable|string',
+            'lecciones_completadas' => 'nullable|integer',
+        ]);
+
+        $query = UsuarioEstudiante::query();
+
+        if ($request->has('dni')) {
+            $query->where('dni', 'ilike', '%' . $request->dni . '%');
+        }
+
+        if ($request->has('id')) {
+            $query->where('id', $request->id);
+        }
+
+        if ($request->has('historial_clases')) {
+            $query->where('historial_clases', 'ilike', '%' . $request->historial_clases . '%');
+        }
+
+        if ($request->has('lecciones_completadas')) {
+            $query->where('lecciones_completadas', $request->lecciones_completadas);
+        }
+
+        $usuariosEstudiantes = $query->paginate(10);
+
+        return response()->json($usuariosEstudiantes);
+    }
+
+    /**
+     * Búsqueda completa en todos los campos.
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string|min:1', // Texto de búsqueda
+        ]);
+
+        $query = $request->input('query'); // Texto de búsqueda
+
+        // Búsqueda en todos los campos
+        $usuariosEstudiantes = UsuarioEstudiante::where('dni', 'ilike', "%$query%")
+            ->orWhere('id', 'ilike', "%$query%")
+            ->orWhere('historial_clases', 'ilike', "%$query%")
+            ->orWhere('lecciones_completadas', 'ilike', "%$query%")
+            ->paginate(10);
+
+        return response()->json($usuariosEstudiantes);
     }
 }

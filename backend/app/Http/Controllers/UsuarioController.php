@@ -13,7 +13,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::paginate(1);
+        $usuarios = Usuario::paginate(15);
         return response()->json(($usuarios));
     }
 
