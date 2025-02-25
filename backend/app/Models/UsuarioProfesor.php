@@ -18,5 +18,13 @@ class UsuarioProfesor extends Model
         'media_calificacion',
     ];
 
-    public $timestamps = false;
+    /*
+     * Relación con la tabla usuario
+    */
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'id', 'id');
+    }
+
+    public $timestamps = true;
 }

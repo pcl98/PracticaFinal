@@ -34,5 +34,5 @@ class UsuarioEstudiante extends Model
         return $this->hasMany(Asiste::class, 'dni', 'dni');
     }
 
-    public $timestamps = false;
+    public $timestamps = true;
 }
