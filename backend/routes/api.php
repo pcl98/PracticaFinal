@@ -9,6 +9,7 @@ use App\Http\Controllers\UsuarioEstudianteController;
 use App\Http\Controllers\ClaseOnlineController;
 use App\Http\Controllers\ClasePresencialController;
 use App\Http\Controllers\UsuarioProfesorController;
+use App\Http\Controllers\ExamenController;
 
 
 
@@ -73,6 +74,16 @@ Route::get('/profesores/search', [UsuarioProfesorController::class, 'search']);
 Route::get('/profesores/{id}', [UsuarioProfesorController::class, 'show']);
 Route::patch('/profesores/{id}', [UsuarioProfesorController::class, 'update']);
 Route::delete('/profesores/{id}', [UsuarioProfesorController::class, 'destroy']);
+
+// Rutas para exámenes
+Route::get('/examenes', [ExamenController::class, 'index']);
+Route::post('/examenes', [ExamenController::class, 'store']);
+Route::get('/examenes/search-by-fields', [ExamenController::class, 'searchByFields']);
+Route::get('/examenes/search', [ExamenController::class, 'search']);
+Route::get('/examenes/{id}', [ExamenController::class, 'show']);
+Route::patch('/examenes/{id}', [ExamenController::class, 'update']);
+Route::delete('/examenes/{id}', [ExamenController::class, 'destroy']);
+
 
 // Ruta para asiste
 Route::get('/{id}/clases', [AsisteController::class, 'getClasesByUsuarioId']);

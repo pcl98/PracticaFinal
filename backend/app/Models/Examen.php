@@ -18,5 +18,5 @@ class Examen extends Model
         'puntuacion',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 }
