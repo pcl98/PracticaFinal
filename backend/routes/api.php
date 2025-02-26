@@ -86,4 +86,11 @@ Route::delete('/examenes/{id}', [ExamenController::class, 'destroy']);
 
 
 // Ruta para asiste
-Route::get('/{id}/clases', [AsisteController::class, 'getClasesByUsuarioId']);
+Route::get('/asistencias', [AsisteController::class, 'index']);
+Route::post('/asistencias', [AsisteController::class, 'store']);
+Route::get('/asistencias/search-by-fields', [AsisteController::class, 'searchByFields']);
+Route::get('/asistencias/search', [AsisteController::class, 'search']);
+Route::post('/asistencias/alumno', [AsisteController::class, 'getClasesByDni']);
+Route::get('/asistencias/clase/{id_clase}', [AsisteController::class, 'getDniByClase']);
+Route::patch('/asistencias/{dni}/{id_clase}', [AsisteController::class, 'update']);
+Route::delete('/asistencias/{dni}/{id_clase}', [AsisteController::class, 'destroy']);
