@@ -50,4 +50,12 @@ class Usuario extends Authenticatable implements JWTSubject
         return $this->hasOne(UsuarioEstudiante::class, 'id', 'id');
     }
 
+    /*
+     * Relación con la tabla usuario_profesor
+    */
+    public function profesor() 
+    {
+        return $this->hasOne(UsuarioProfesor::class, 'id', 'id');
+    }
+
 }

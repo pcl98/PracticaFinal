@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\UsuarioEstudiante;
+use App\Models\Pago;
+use App\Models\Asiste;
 
 class UsuarioEstudianteController extends Controller
 {
@@ -144,5 +147,41 @@ class UsuarioEstudianteController extends Controller
             ->paginate(10);
 
         return response()->json($usuariosEstudiantes);
+    }
+
+    /**
+     * Obtener todos los pagos hechos por un alumno
+     */
+    public function getPagosByIdEstudiante($id)
+    {
+        $usuarioEstudiante = UsuarioEstudiante::find($id);
+
+        if (!$usuarioEstudiante) {
+            return response()->json(['message' => 'Usuario estudiante no encontrado'], 404);
+        }
+
+        // Obtener las clases a las que ha asistido el alumno
+        $clases = Pago::where('id_estudiante', $id)
+            ->paginate(10);
+
+        return response()->json($clases);
+    }
+
+    /**
+     * Obtener todas las clases a las que ha asistido un alumno
+     */
+    public function getClasesByIdEstudiante($id)
+    {
+        // Buscar el estudiante por ID
+        $estudiante = UsuarioEstudiante::where('id', $id)->first();
+
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Obtener las clases a las que ha asistido
+        $clases = $estudiante->clases;
+
+        return response()->json($clases);
     }
 }

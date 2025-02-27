@@ -145,42 +145,4 @@ class AsisteController extends Controller
 
         return response()->json($asistencias);
     }
-
-    /**
-     * Obtener todas las clases a las que ha asistido un alumno
-     */
-    public function getClasesByDni(Request $request)
-    {
-        // Validar que el DNI se haya enviado en el cuerpo de la solicitud
-        $request->validate([
-            'dni' => 'required|string|max:20|exists:usuario_estudiante,dni',
-        ]);
-
-        $dni = $request->input('dni');
-
-        // Obtener las clases a las que ha asistido el alumno
-        $clases = Asiste::where('dni', $dni)
-            ->with('clase') // Cargar la relación con la tabla clase
-            ->paginate(10);
-
-        return response()->json($clases);
-    }
-
-    /**
-     * Obtener estudiantes que asisten a una clase
-     */
-    public function getDniByClase ($id_clase) {
-
-        // Validar que la clase exista en la tabla clase
-        if (!Clase::where('id', $id_clase)->exists()) {
-            return response()->json(['message' => 'La clase no existe'], 404);
-        }
-
-        $estudiantes = Asiste::where('id_clase', $id_clase)
-                ->with('estudiante') // Cargar la relación con la tabla usuario_estudiante
-                ->paginate(10);
-
-        return response()->json($estudiantes);
-    }
-
 }

@@ -10,7 +10,7 @@ use App\Http\Controllers\ClaseOnlineController;
 use App\Http\Controllers\ClasePresencialController;
 use App\Http\Controllers\UsuarioProfesorController;
 use App\Http\Controllers\ExamenController;
-
+use App\Http\Controllers\PagoController;
 
 
 // Rutas para usuarios
@@ -36,6 +36,7 @@ Route::post('/clases', [ClaseController::class, 'store']);
 Route::get('/clases/presencial', [ClaseController::class, 'getClasesPresenciales']);
 Route::get('/clases/online', [ClaseController::class, 'getClasesOnline']);
 Route::get('/clases/{id}', [ClaseController::class, 'show']);
+Route::get('/clases/{id}/estudiantes', [ClaseController::class, 'getEstudiantesByIdClase']);
 Route::delete('/clases/{id}', [ClaseController::class, 'destroy']);
 Route::patch('/clases/{id}', [ClaseController::class, 'update']);
 
@@ -62,7 +63,9 @@ Route::get('/estudiantes', [UsuarioEstudianteController::class, 'index']);
 Route::post('/estudiantes', [UsuarioEstudianteController::class, 'store']);
 Route::get('/estudiantes/search-by-fields', [UsuarioEstudianteController::class, 'searchByFields']);
 Route::get('/estudiantes/search', [UsuarioEstudianteController::class, 'search']);
+Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByIdEstudiante']);
 Route::get('/estudiantes/{id}', [UsuarioEstudianteController::class, 'show']);
+Route::get('/estudiantes/{id}/pagos', [UsuarioEstudianteController::class, 'getPagosByIdEstudiante']);
 Route::patch('/estudiantes/{id}', [UsuarioEstudianteController::class, 'update']);
 Route::delete('/estudiantes/{id}', [UsuarioEstudianteController::class, 'destroy']);
 
@@ -84,13 +87,19 @@ Route::get('/examenes/{id}', [ExamenController::class, 'show']);
 Route::patch('/examenes/{id}', [ExamenController::class, 'update']);
 Route::delete('/examenes/{id}', [ExamenController::class, 'destroy']);
 
-
 // Ruta para asiste
 Route::get('/asistencias', [AsisteController::class, 'index']);
 Route::post('/asistencias', [AsisteController::class, 'store']);
 Route::get('/asistencias/search-by-fields', [AsisteController::class, 'searchByFields']);
 Route::get('/asistencias/search', [AsisteController::class, 'search']);
-Route::post('/asistencias/alumno', [AsisteController::class, 'getClasesByDni']);
-Route::get('/asistencias/clase/{id_clase}', [AsisteController::class, 'getDniByClase']);
 Route::patch('/asistencias/{dni}/{id_clase}', [AsisteController::class, 'update']);
 Route::delete('/asistencias/{dni}/{id_clase}', [AsisteController::class, 'destroy']);
+
+// Rutas para pagos
+Route::get('/pagos', [PagoController::class, 'index']);
+Route::post('/pagos', [PagoController::class, 'store']);
+Route::get('/pagos/search-by-fields', [PagoController::class, 'searchByFields']);
+Route::get('/pagos/search', [PagoController::class, 'search']);
+Route::get('/pagos/{id}', [PagoController::class, 'show']);
+Route::patch('/pagos/{id}', [PagoController::class, 'update']);
+Route::delete('/pagos/{id}', [PagoController::class, 'destroy']);

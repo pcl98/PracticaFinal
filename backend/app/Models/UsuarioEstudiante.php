@@ -34,5 +34,13 @@ class UsuarioEstudiante extends Model
         return $this->hasMany(Asiste::class, 'dni', 'dni');
     }
 
+    /**
+     * Devuelve la info de todas las clases a las que ha asistido un estudiante
+     */
+    public function clases() 
+    {
+        return $this->belongsToMany(Clase::class, 'asiste', 'dni', 'id_clase', 'dni', 'id');
+    }
+
     public $timestamps = true;
 }
