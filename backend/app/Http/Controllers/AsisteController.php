@@ -43,12 +43,6 @@ class AsisteController extends Controller
     public function update(Request $request, $dni, $id_clase)
     {
 
-        // Depuración: Verificar los parámetros de la URL
-        \Log::info("DNI: $dni, ID Clase: $id_clase");
-
-        // Depuración: Verificar el cuerpo de la solicitud
-        \Log::info("Body: " . json_encode($request->all()));
-
         // Buscar el registro por dni e id_clase
         $asiste = Asiste::where('dni', $dni)
             ->where('id_clase', $id_clase)
@@ -73,7 +67,7 @@ class AsisteController extends Controller
             $asiste->id_clase = $request->id_clase;
         }
 
-        $asiste->save();
+        $asiste->update($request->all());
 
         return response()->json(['message' => 'Asistencia actualizada correctamente', 'asiste' => $asiste]);
     }

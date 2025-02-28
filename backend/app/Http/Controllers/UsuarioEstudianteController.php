@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clase;
+use App\Models\Notifica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\UsuarioEstudiante;
@@ -183,5 +184,28 @@ class UsuarioEstudianteController extends Controller
         $clases = $estudiante->clases;
 
         return response()->json($clases);
+    }
+
+    /**
+     * Obtener las notificaciones de un estudiante
+     */
+    public function getNotificacionesByDniEstudiante (Request $request) 
+    {
+        // Obtener el dni del estudiante desde la request
+        $dniEstudiante = $request->input('dni');
+    
+        // Verificar si el estudiante existe
+        $estudiante = UsuarioEstudiante::where('dni', $dniEstudiante)->first();
+    
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+    
+        // Buscar notificaciones para el estudiante
+        $notificaciones = Notifica::whereHas('clase.asiste', function ($query) use ($dniEstudiante) {
+            $query->where('dni', $dniEstudiante);
+        })->get();
+    
+        return response()->json($notificaciones);
     }
 }

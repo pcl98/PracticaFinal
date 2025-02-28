@@ -11,6 +11,7 @@ use App\Http\Controllers\ClasePresencialController;
 use App\Http\Controllers\UsuarioProfesorController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PagoController;
+use App\Http\Controllers\NotificaController;
 
 
 // Rutas para usuarios
@@ -63,7 +64,8 @@ Route::get('/estudiantes', [UsuarioEstudianteController::class, 'index']);
 Route::post('/estudiantes', [UsuarioEstudianteController::class, 'store']);
 Route::get('/estudiantes/search-by-fields', [UsuarioEstudianteController::class, 'searchByFields']);
 Route::get('/estudiantes/search', [UsuarioEstudianteController::class, 'search']);
-Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByIdEstudiante']);
+Route::post('/estudiantes/notificaciones', [UsuarioEstudianteController::class, 'getNotificacionesByDniEstudiante']);
+Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByDniEstudiante']);
 Route::get('/estudiantes/{id}', [UsuarioEstudianteController::class, 'show']);
 Route::get('/estudiantes/{id}/pagos', [UsuarioEstudianteController::class, 'getPagosByIdEstudiante']);
 Route::patch('/estudiantes/{id}', [UsuarioEstudianteController::class, 'update']);
@@ -103,3 +105,12 @@ Route::get('/pagos/search', [PagoController::class, 'search']);
 Route::get('/pagos/{id}', [PagoController::class, 'show']);
 Route::patch('/pagos/{id}', [PagoController::class, 'update']);
 Route::delete('/pagos/{id}', [PagoController::class, 'destroy']);
+
+// Rutas para notificaciones
+Route::get('/notificaciones', [NotificaController::class, 'index']);
+Route::post('/notificaciones', [NotificaController::class, 'store']);
+Route::get('/notificaciones/search-by-fields', [NotificaController::class, 'searchByFields']);
+Route::get('/notificaciones/search', [NotificaController::class, 'search']);
+Route::get('/notificaciones/{id}', [NotificaController::class, 'show']);
+Route::patch('/notificaciones/{id}', [NotificaController::class, 'update']);
+Route::delete('/notificaciones/{id}', [NotificaController::class, 'destroy']);
