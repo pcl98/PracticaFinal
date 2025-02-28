@@ -16,7 +16,24 @@ class Valora extends Model
         'id_clase',
         'comentario',
         'fecha_valoracion',
-        'califiacion',
+        'calificacion',
     ];
 
+    public $timestamps = true;
+
+    /**
+     * Relación con el modelo UsuarioEstudiante
+     */
+    public function estudiante()
+    {
+        return $this->belongsTo(UsuarioEstudiante::class, 'dni', 'dni');
+    }
+
+    /**
+     * Relación con el modelo Clase
+     */
+    public function clase()
+    {
+        return $this->belongsTo(Clase::class, 'id_clase', 'id_clase');
+    }
 }

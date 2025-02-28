@@ -26,5 +26,13 @@ class UsuarioProfesor extends Model
         return $this->belongsTo(Usuario::class, 'id', 'id');
     }
 
+    /**
+     * Relación con la tabla clase
+     */
+    public function clases()
+    {
+        return $this->hasMany(Clase::class, 'profesor_id', 'id');
+    }
+
     public $timestamps = true;
 }

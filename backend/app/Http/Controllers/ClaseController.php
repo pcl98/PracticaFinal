@@ -192,4 +192,22 @@ class ClaseController extends Controller
 
         return response()->json($estudiantes);
     }
+
+    /**
+     * Obtener profesor
+     */
+    public function getProfesorByClase($idClase)
+    {
+        // Buscar la clase por su ID
+        $clase = Clase::find($idClase);
+
+        if (!$clase) {
+            return response()->json(['message' => 'Clase no encontrada'], 404);
+        }
+
+        // Obtener el profesor que imparte la clase usando la relación
+        $profesor = $clase->profesor;
+
+        return response()->json($profesor);
+    }
 }

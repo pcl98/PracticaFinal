@@ -34,6 +34,14 @@ class UsuarioEstudiante extends Model
         return $this->hasMany(Asiste::class, 'dni', 'dni');
     }
 
+    /*
+     * Relación con la tabla notificaciones
+    */
+    public function notificaciones() 
+    {
+        return $this->hasMany(Notifica::class, 'dni', 'dni');
+    }
+
     /**
      * Devuelve la info de todas las clases a las que ha asistido un estudiante
      */

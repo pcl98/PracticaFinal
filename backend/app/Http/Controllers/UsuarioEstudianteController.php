@@ -189,23 +189,21 @@ class UsuarioEstudianteController extends Controller
     /**
      * Obtener las notificaciones de un estudiante
      */
-    public function getNotificacionesByDniEstudiante (Request $request) 
+    public function getNotificacionesByDniEstudiante(Request $request)
     {
         // Obtener el dni del estudiante desde la request
         $dniEstudiante = $request->input('dni');
-    
+
         // Verificar si el estudiante existe
         $estudiante = UsuarioEstudiante::where('dni', $dniEstudiante)->first();
-    
+
         if (!$estudiante) {
             return response()->json(['message' => 'Estudiante no encontrado'], 404);
         }
-    
-        // Buscar notificaciones para el estudiante
-        $notificaciones = Notifica::whereHas('clase.asiste', function ($query) use ($dniEstudiante) {
-            $query->where('dni', $dniEstudiante);
-        })->get();
-    
+
+        // Obtener las notificaciones del estudiante usando la relación
+        $notificaciones = $estudiante->notificaciones;
+
         return response()->json($notificaciones);
     }
 }

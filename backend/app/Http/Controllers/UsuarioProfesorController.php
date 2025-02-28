@@ -146,4 +146,22 @@ class UsuarioProfesorController extends Controller
 
         return response()->json($profesores);
     }
+
+    /**
+     * Obtener las clases que imparte un profesor
+     */
+    public function getClasesByProfesor($idProfesor)
+    {
+        // Buscar al profesor por su ID
+        $profesor = UsuarioProfesor::find($idProfesor);
+
+        if (!$profesor) {
+            return response()->json(['message' => 'Profesor no encontrado'], 404);
+        }
+
+        // Obtener las clases que imparte el profesor usando la relación
+        $clases = $profesor->clases;
+
+        return response()->json($clases);
+    }
 }
