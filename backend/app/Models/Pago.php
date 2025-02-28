@@ -20,5 +20,19 @@ class Pago extends Model
         'id_clase',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
+
+    /*
+     * Relación con la tabla clase
+     */
+    public function clase() {
+        return $this->belongsTo(Clase::class, 'id_clase', 'id');
+    }
+
+    /*
+     * Relación con la tabla estudiante
+     */
+    public function estudiante() {
+        return $this->belongsTo(UsuarioEstudiante::class, 'id_estudiante', 'id');
+    }
 }

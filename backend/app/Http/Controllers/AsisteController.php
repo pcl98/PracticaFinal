@@ -43,12 +43,6 @@ class AsisteController extends Controller
     public function update(Request $request, $dni, $id_clase)
     {
 
-        // Depuración: Verificar los parámetros de la URL
-        \Log::info("DNI: $dni, ID Clase: $id_clase");
-
-        // Depuración: Verificar el cuerpo de la solicitud
-        \Log::info("Body: " . json_encode($request->all()));
-
         // Buscar el registro por dni e id_clase
         $asiste = Asiste::where('dni', $dni)
             ->where('id_clase', $id_clase)
@@ -73,7 +67,7 @@ class AsisteController extends Controller
             $asiste->id_clase = $request->id_clase;
         }
 
-        $asiste->save();
+        $asiste->update($request->all());
 
         return response()->json(['message' => 'Asistencia actualizada correctamente', 'asiste' => $asiste]);
     }
@@ -145,42 +139,4 @@ class AsisteController extends Controller
 
         return response()->json($asistencias);
     }
-
-    /**
-     * Obtener todas las clases a las que ha asistido un alumno
-     */
-    public function getClasesByDni(Request $request)
-    {
-        // Validar que el DNI se haya enviado en el cuerpo de la solicitud
-        $request->validate([
-            'dni' => 'required|string|max:20|exists:usuario_estudiante,dni',
-        ]);
-
-        $dni = $request->input('dni');
-
-        // Obtener las clases a las que ha asistido el alumno
-        $clases = Asiste::where('dni', $dni)
-            ->with('clase') // Cargar la relación con la tabla clase
-            ->paginate(10);
-
-        return response()->json($clases);
-    }
-
-    /**
-     * Obtener estudiantes que asisten a una clase
-     */
-    public function getDniByClase ($id_clase) {
-
-        // Validar que la clase exista en la tabla clase
-        if (!Clase::where('id', $id_clase)->exists()) {
-            return response()->json(['message' => 'La clase no existe'], 404);
-        }
-
-        $estudiantes = Asiste::where('id_clase', $id_clase)
-                ->with('estudiante') // Cargar la relación con la tabla usuario_estudiante
-                ->paginate(10);
-
-        return response()->json($estudiantes);
-    }
-
 }

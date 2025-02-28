@@ -174,4 +174,22 @@ class ClaseController extends Controller
         $clases = ClaseOnline::all();
         return response()->json($clases);
     }
+
+    /**
+     * Obtener todos los estudiantes que asisten a una clase
+     */
+    public function getEstudiantesByIdClase($id)
+    {
+        // Buscar la clase por ID
+        $clase = Clase::where('id', $id)->first();
+
+        if (!$clase) {
+            return response()->json(['message' => 'Clase no encontrada'], 404);
+        }
+
+        // Obtener las clases a las que ha asistido
+        $estudiantes = $clase->estudiantes;
+
+        return response()->json($estudiantes);
+    }
 }

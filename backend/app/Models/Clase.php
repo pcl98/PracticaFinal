@@ -21,4 +21,35 @@ class Clase extends Model
     ];
 
     public $timestamps = true;
+
+    /**
+     * Relación con la tabla asiste
+     */
+    public function asiste() {
+        return $this->hasMany(Asiste::class, 'id_clase', 'id');
+    }
+
+    /**
+     * Relación con la tabla clase_online
+     */
+    public function online()
+    {
+        return $this->hasOne(ClaseOnline::class, 'id', 'id');
+    }
+
+    /**
+     * Relación con la tabla clase_presencial
+     */
+    public function presencial()
+    {
+        return $this->hasOne(ClasePresencial::class, 'id', 'id');
+    }
+
+    /**
+     * Devuelve los estudiantes que asisten a una clase
+     */
+    public function estudiantes()
+    {
+        return $this->belongsToMany(UsuarioEstudiante::class, 'asiste', 'id_clase', 'dni', 'id', 'dni');
+    }
 }
