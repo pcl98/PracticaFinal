@@ -60,4 +60,12 @@ class Clase extends Model
     {
         return $this->belongsTo(UsuarioProfesor::class, 'profesor_id', 'id');
     }
+
+    /**
+     * Relación con tabla valora
+     */
+    public function valoraciones()
+{
+    return $this->hasMany(Valora::class, 'id_clase', 'id');
+}
 }

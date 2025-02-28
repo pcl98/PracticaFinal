@@ -21,6 +21,12 @@ class Valora extends Model
 
     public $timestamps = true;
 
+    // Indica que la clave primaria no es autoincremental
+    public $incrementing = false;
+
+    // Define la clave primaria compuesta
+    protected $primaryKey = ['dni', 'id_clase'];
+
     /**
      * Relación con el modelo UsuarioEstudiante
      */
@@ -34,6 +40,12 @@ class Valora extends Model
      */
     public function clase()
     {
-        return $this->belongsTo(Clase::class, 'id_clase', 'id_clase');
+        return $this->belongsTo(Clase::class, 'id_clase', 'id');
+    }
+
+    protected function setKeysForSaveQuery($query)
+    {
+        return $query->where('dni', $this->dni)
+                    ->where('id_clase', $this->id_clase);
     }
 }

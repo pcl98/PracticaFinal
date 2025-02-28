@@ -12,6 +12,7 @@ use App\Http\Controllers\UsuarioProfesorController;
 use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\NotificaController;
+use App\Http\Controllers\ValoraController;
 
 
 // Rutas para usuarios
@@ -22,7 +23,6 @@ Route::post('/usuarios', [UsuarioController::class, 'store']);
 Route::get('/usuarios/{id}', [UsuarioController::class, 'show']);
 Route::patch('/usuarios/{id}', [UsuarioController::class, 'update']);
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']);
-
 
 // Rutas de autenticación
 Route::post('login', [AuthController::class, 'login']);
@@ -39,6 +39,7 @@ Route::get('/clases/online', [ClaseController::class, 'getClasesOnline']);
 Route::get('/clases/{id}', [ClaseController::class, 'show']);
 Route::get('/clases/{id}/profesor', [ClaseController::class, 'getProfesorByClase']);
 Route::get('/clases/{id}/estudiantes', [ClaseController::class, 'getEstudiantesByIdClase']);
+Route::get('/clases/{id}/valoraciones', [ValoraController::class, 'getValoracionesByClase']);
 Route::delete('/clases/{id}', [ClaseController::class, 'destroy']);
 Route::patch('/clases/{id}', [ClaseController::class, 'update']);
 
@@ -69,6 +70,7 @@ Route::post('/estudiantes/notificaciones', [UsuarioEstudianteController::class, 
 Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByDniEstudiante']);
 Route::get('/estudiantes/{id}', [UsuarioEstudianteController::class, 'show']);
 Route::get('/estudiantes/{id}/pagos', [UsuarioEstudianteController::class, 'getPagosByIdEstudiante']);
+Route::get('/estudiantes/{id}/valoraciones', [UsuarioEstudianteController::class, 'getValoracionesById']);
 Route::patch('/estudiantes/{id}', [UsuarioEstudianteController::class, 'update']);
 Route::delete('/estudiantes/{id}', [UsuarioEstudianteController::class, 'destroy']);
 
@@ -116,3 +118,11 @@ Route::get('/notificaciones/search', [NotificaController::class, 'search']);
 Route::get('/notificaciones/{id}', [NotificaController::class, 'show']);
 Route::patch('/notificaciones/{id}', [NotificaController::class, 'update']);
 Route::delete('/notificaciones/{id}', [NotificaController::class, 'destroy']);
+
+// Rutas para valoraciones
+Route::get('/valoraciones', [ValoraController::class, 'index']);
+Route::post('/valoraciones', [ValoraController::class, 'store']);
+Route::get('/valoraciones/search', [ValoraController::class, 'search']);
+Route::get('/valoraciones/search-by-fields', [ValoraController::class, 'searchByFields']);
+Route::patch('/valoraciones/{dni}/{id_clase}', [ValoraController::class, 'update']);
+Route::delete('/valoraciones/{dni}/{id_clase}', [ValoraController::class, 'destroy']);

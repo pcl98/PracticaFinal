@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\UsuarioEstudiante;
 use App\Models\Pago;
 use App\Models\Asiste;
+use App\Models\Valora;
 
 class UsuarioEstudianteController extends Controller
 {
@@ -205,5 +206,23 @@ class UsuarioEstudianteController extends Controller
         $notificaciones = $estudiante->notificaciones;
 
         return response()->json($notificaciones);
+    }
+
+    /**
+     * Obtener todas las valoraciones de un estudiante por su ID
+     */
+    public function getValoracionesById($id)
+    {
+        // Verificar si el estudiante existe
+        $estudiante = UsuarioEstudiante::find($id);
+
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Obtener las valoraciones del estudiante usando su DNI
+        $valoraciones = Valora::where('dni', $estudiante->dni)->get();
+
+        return response()->json($valoraciones);
     }
 }

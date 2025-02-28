@@ -50,5 +50,13 @@ class UsuarioEstudiante extends Model
         return $this->belongsToMany(Clase::class, 'asiste', 'dni', 'id_clase', 'dni', 'id');
     }
 
+    /**
+     * Relación con la tabla valora
+     */
+    public function valoraciones()
+{
+    return $this->hasMany(Valora::class, 'dni', 'dni');
+}
+
     public $timestamps = true;
 }

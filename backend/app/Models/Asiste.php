@@ -19,11 +19,11 @@ class Asiste extends Model
 
     public $timestamps = true;
 
-     // Indica que la clave primaria no es autoincremental
-     public $incrementing = false;
+    // Indica que la clave primaria no es autoincremental
+    public $incrementing = false;
 
-     // Define la clave primaria compuesta
-     protected $primaryKey = ['dni', 'id_clase'];
+    // Define la clave primaria compuesta
+    protected $primaryKey = ['dni', 'id_clase'];
 
     /*
      * Relación con la tabla clase
