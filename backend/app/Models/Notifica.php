@@ -21,12 +21,12 @@ class Notifica extends Model
     public $timestamps = true;
     
     /**
-     * Relación con el modelo UsuarioProfesor
+     * Relación con el modelo estudiante
      */
     public function profesor()
     {
         // Relación uno a uno, el dni de notifica hace referencia a usuario_profesor.dni
-        return $this->belongsTo(UsuarioProfesor::class, 'dni', 'dni');
+        return $this->belongsTo(UsuarioEstudiante::class, 'dni', 'dni');
     }
 
     /**

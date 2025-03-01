@@ -52,4 +52,20 @@ class Clase extends Model
     {
         return $this->belongsToMany(UsuarioEstudiante::class, 'asiste', 'id_clase', 'dni', 'id', 'dni');
     }
+
+    /**
+     * Relación con la tabla usuario_profesor (una clase pertenece a un profesor)
+     */
+    public function profesor()
+    {
+        return $this->belongsTo(UsuarioProfesor::class, 'profesor_id', 'id');
+    }
+
+    /**
+     * Relación con tabla valora
+     */
+    public function valoraciones()
+{
+    return $this->hasMany(Valora::class, 'id_clase', 'id');
+}
 }

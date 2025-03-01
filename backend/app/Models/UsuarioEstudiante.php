@@ -34,6 +34,14 @@ class UsuarioEstudiante extends Model
         return $this->hasMany(Asiste::class, 'dni', 'dni');
     }
 
+    /*
+     * Relación con la tabla notificaciones
+    */
+    public function notificaciones() 
+    {
+        return $this->hasMany(Notifica::class, 'dni', 'dni');
+    }
+
     /**
      * Devuelve la info de todas las clases a las que ha asistido un estudiante
      */
@@ -41,6 +49,14 @@ class UsuarioEstudiante extends Model
     {
         return $this->belongsToMany(Clase::class, 'asiste', 'dni', 'id_clase', 'dni', 'id');
     }
+
+    /**
+     * Relación con la tabla valora
+     */
+    public function valoraciones()
+{
+    return $this->hasMany(Valora::class, 'dni', 'dni');
+}
 
     public $timestamps = true;
 }

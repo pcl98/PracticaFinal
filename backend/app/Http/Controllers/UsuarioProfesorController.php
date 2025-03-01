@@ -22,15 +22,15 @@ class UsuarioProfesorController extends Controller
      */
     public function store(Request $request)
     {
-        // Reiniciar la secuencia del campo id si es necesario
         DB::statement('SELECT setval(\'usuario_profesor_id_seq\', (SELECT MAX(id) FROM usuario_profesor));');
 
         // Validar los datos antes de crear el registro
         $request->validate([
             'dni' => 'required|string|max:20|unique:usuario_profesor,dni',
-            'id' => 'required|integer|exists:usuario,id', // Asegura que el id exista en la tabla usuario
+            'id' => 'required|integer|exists:usuario,id',
             'especialidad' => 'required|string|max:255',
             'media_calificacion' => 'nullable|numeric',
+            'descripcion' => 'nullable|string', 
         ]);
 
         // Crear el registro
@@ -69,6 +69,7 @@ class UsuarioProfesorController extends Controller
             'dni' => 'sometimes|string|max:20|unique:usuario_profesor,dni,' . $profesor->id,
             'especialidad' => 'sometimes|string|max:255',
             'media_calificacion' => 'nullable|numeric',
+            'descripcion' => 'nullable|string',
         ]);
 
         // Actualizar el registro
@@ -103,6 +104,7 @@ class UsuarioProfesorController extends Controller
             'dni' => 'sometimes|string|max:20',
             'especialidad' => 'sometimes|string|max:255',
             'media_calificacion' => 'nullable|numeric',
+            'descripcion' => 'nullable|string', 
         ]);
 
         // Construir la consulta
@@ -118,6 +120,10 @@ class UsuarioProfesorController extends Controller
 
         if ($request->has('media_calificacion')) {
             $query->where('media_calificacion', $request->media_calificacion);
+        }
+
+        if ($request->has('descripcion')) {
+            $query->where('descripcion', 'ilike', '%' . $request->descripcion . '%');
         }
 
         // Paginar los resultados
@@ -142,8 +148,27 @@ class UsuarioProfesorController extends Controller
         $profesores = UsuarioProfesor::where('dni', 'ilike', "%$query%")
             ->orWhere('especialidad', 'ilike', "%$query%")
             ->orWhere('media_calificacion', 'ilike', "%$query%")
+            ->orWhere('descripcion', 'ilike', "%$query%") 
             ->paginate(10);
 
         return response()->json($profesores);
+    }
+
+    /**
+     * Obtener las clases que imparte un profesor
+     */
+    public function getClasesByProfesor($idProfesor)
+    {
+        // Buscar al profesor por su ID
+        $profesor = UsuarioProfesor::find($idProfesor);
+
+        if (!$profesor) {
+            return response()->json(['message' => 'Profesor no encontrado'], 404);
+        }
+
+        // Obtener las clases que imparte el profesor usando la relación
+        $clases = $profesor->clases;
+
+        return response()->json($clases);
     }
 }

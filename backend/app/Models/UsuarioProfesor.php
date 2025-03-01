@@ -16,6 +16,7 @@ class UsuarioProfesor extends Model
         'id',
         'especialidad',
         'media_calificacion',
+        'descripcion',
     ];
 
     /*
@@ -24,6 +25,14 @@ class UsuarioProfesor extends Model
     public function usuario()
     {
         return $this->belongsTo(Usuario::class, 'id', 'id');
+    }
+
+    /**
+     * Relación con la tabla clase
+     */
+    public function clases()
+    {
+        return $this->hasMany(Clase::class, 'profesor_id', 'id');
     }
 
     public $timestamps = true;
