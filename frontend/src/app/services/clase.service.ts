@@ -19,9 +19,9 @@ export class ClaseService {
     return this.http.get<any[]>(`${this.apiUrl}/clases-online/${id}`); 
   }
 
-    // Método para obtener solo las clases online
-    public getClasesPresencial(id:number): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/clases-presenciales/${id}`); 
-    }
+  // Método para obtener solo las clases online
+  public getClasesPresencial(id:number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/clases-presenciales/${id}`); 
+  }
 }
 

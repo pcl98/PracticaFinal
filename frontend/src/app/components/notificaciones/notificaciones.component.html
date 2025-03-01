@@ -2,9 +2,25 @@
     <div class="notificaciones-modal">
         <div class="notificaciones-content">
             <h2>Notificaciones</h2>
-            <!-- Aquí irán las notificaciones cuando las agregues más adelante -->
-            <p>No tienes notificaciones en este momento.</p>
-            <button (click)="cerrar()">Cerrar</button>
+            @if(notificaciones.length === 0) {
+                <div class="no-notificaciones">
+                    <p>No tienes notificaciones en este momento.</p>
+                </div>                
+            }
+            @else {
+                @for (noti of notificaciones; track noti.id) {
+                    <div class="notificacion-card">
+                        <div class="notificacion-header">
+                            <span class="notificacion-fecha">{{ noti.fecha_envio | date:'dd/MM/yyyy' }}</span>
+                        </div>
+                        <div class="notificacion-body">
+                            <p><strong>Contenido:</strong> {{ noti.contenido }}</p>
+                        </div>
+                    </div>
+                    
+                }                
+            }
+            <button class="notificacion-close" (click)="cerrar()">Cerrar</button>
         </div>
     </div>
 }

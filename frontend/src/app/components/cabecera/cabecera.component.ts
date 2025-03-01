@@ -1,28 +1,31 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NotificacionesComponent } from '../notificaciones/notificaciones.component';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cabecera',
   templateUrl: './cabecera.component.html',
   styleUrls: ['./cabecera.component.css'],
-  imports: [NotificacionesComponent]
+  imports: [NotificacionesComponent, CommonModule]
 })
 
 export class CabeceraComponent {
   mostrarNotificaciones:boolean = false;
   menuOpen = false;
+  usuario: any = null;
 
-  constructor(public authService: AuthService, private router: Router) {
+  @ViewChild('notificacionesComponent') notificacionesComponent: NotificacionesComponent | undefined;
 
-  }
+  constructor(public authService: AuthService, private router: Router) {}
 
   // Este método emite el evento para abrir la ventana de notificaciones
   abrirNotificaciones():void {
-    this.mostrarNotificaciones = !this.mostrarNotificaciones;
-    console.log(this.mostrarNotificaciones);
+    if (this.notificacionesComponent) {
+      this.notificacionesComponent.abrirNotificaciones();
+    }
   }
 
   toggleMenu(): void {
@@ -41,13 +44,8 @@ export class CabeceraComponent {
     this.router.navigate(['/perfil']);
   }
 
-  // Comprobar si el usuario está autenticado
-  get isUserAuthenticated(): boolean {
-    let isAuth = false;
-    this.authService.isLoggedIn().subscribe(value => {
-      isAuth = value;
-    });
-    return isAuth;
+  ngOnInit(): void {
+    // Obtener la información del usuario al inicializar el componente
   }
 
   logout(): void {
