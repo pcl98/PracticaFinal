@@ -1,0 +1,31 @@
+<div class ="online">
+    <div class="form-container">
+        <h2>Crear Nueva Clase</h2>
+        <form (submit)="crearClase()">
+    
+        <label for="instrumento">Instrumento:</label>
+        <input type="text" id="instrumento" [(ngModel)]="nuevaClase.instrumento" name="instrumento" required>
+    
+        <label for="dificultad">Dificultad:</label>
+        <select id="dificultad" [(ngModel)]="nuevaClase.dificultad" name="dificultad" required>
+            <option value="principiante">Principiante</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+        </select>
+    
+        <label for="duracion">Duración (minutos):</label>
+        <input type="number" id="duracion" [(ngModel)]="nuevaClase.duracion" name="duracion" required>
+    
+        <label for="max_alumnos">Máximo de Alumnos:</label>
+        <input type="number" id="max_alumnos" [(ngModel)]="nuevaClase.max_alumnos" name="max_alumnos" required>
+    
+        <label for="precio">Precio (€):</label>
+        <input type="number" step="0.01" id="precio" [(ngModel)]="nuevaClase.precio" name="precio" required>
+    
+        <label for="profesor_id">ID del Profesor:</label>
+        <input type="number" id="profesor_id" [(ngModel)]="nuevaClase.profesor_id" name="profesor_id" required>
+    
+        <button type="submit">Crear Clase</button>
+        </form>
+    </div>
+</div>
