@@ -35,10 +35,11 @@ class ClasePresencialController extends Controller
     /**
      * Muestra una clase presencial específica
      */
-    public function show(ClasePresencial $clasePresencial)
+    public function show(ClasePresencial $id)
     {
-        return response()->json($clasePresencial);
+        return response()->json($id);
     }
+
 
     /**
      * Actualiza una clase presencial

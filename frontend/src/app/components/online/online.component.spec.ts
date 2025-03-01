@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CommonModule } from '@angular/common';
 import { OnlineComponent } from './online.component';
 
 describe('OnlineComponent', () => {
@@ -8,7 +8,7 @@ describe('OnlineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OnlineComponent]
+      imports: [OnlineComponent,CommonModule]
     })
     .compileComponents();
 

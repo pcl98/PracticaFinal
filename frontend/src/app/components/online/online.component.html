@@ -1,6 +1,6 @@
 <div class="online">
-    <h1>ONLINE</h1>
-    <div class="filtro">
+    <h1>{{ 'clases online' | uppercase }}</h1>
+    <div class="filtro"> 
         <label class = "labelfiltro1">Tipo de clases</label>
         <div class="clases">
             <input type="checkbox" id="online-chck" (change)="cambioCheckClase('online')" checked/>
@@ -39,12 +39,15 @@
         <option value = "Canto">Canto</option>
     </select>
     <button class="filtrar" (click)="filtrar()">Filtrar</button>
-    <div class="muestraClase"> 
+    <div class="muestraClase">
+        
         @for(clase of clasesFiltradas ; track $index){
+            <h2>{{clase.titulo}}</h2>
             <h3>Clase de {{ clase.instrumento }}</h3>
             <p>Precio: {{ clase.precio }}</p>
-            <p>Duración: {{ clase.duracion }}</p>
-            <p>Precio: {{ clase.precio }}€</p>
+            <p>Duración: {{ clase.duracion }} minutos</p>
+            <p>Dificultad: {{clase.dificultad}}</p>
+            <a [href]="clase.url_video" target="_blank">Pincha aquí para ver la clase</a>
             
             @switch(clase.instrumento){
                 @case ('Guitarra'){
@@ -60,7 +63,7 @@
                 }
             
             }
-            <button class="Subcribir">Suscribirme</button>
+        
             <hr>
         }
     </div>
