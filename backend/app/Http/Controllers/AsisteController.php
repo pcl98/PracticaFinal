@@ -58,15 +58,6 @@ class AsisteController extends Controller
             'id_clase' => 'sometimes|integer|exists:clase,id',
         ]);
 
-        // Actualizar el registro con los nuevos valores (si se proporcionan)
-        if ($request->has('dni')) {
-            $asiste->dni = $request->dni;
-        }
-
-        if ($request->has('id_clase')) {
-            $asiste->id_clase = $request->id_clase;
-        }
-
         $asiste->update($request->all());
 
         return response()->json(['message' => 'Asistencia actualizada correctamente', 'asiste' => $asiste]);

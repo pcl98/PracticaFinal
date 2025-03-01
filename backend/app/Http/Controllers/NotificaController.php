@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notifica;
-use App\Models\UsuarioProfesor;
+use App\Models\UsuarioEstudiante;
 use App\Models\Clase;
 
 class NotificaController extends Controller
@@ -25,7 +25,7 @@ class NotificaController extends Controller
     {
         // Validar los datos antes de crear el registro
         $request->validate([
-            'dni' => 'required|exists:usuario_profesor,dni', // Asegura que el dni exista en usuario_profesor
+            'dni' => 'required|exists:usuario_estudiante,dni', // Asegura que el dni exista en usuario_estudiante
             'id_clase' => 'required|integer|exists:clase,id', // Asegura que id_clase exista en clase
             'fecha_envio' => 'nullable|date',
             'contenido' => 'nullable|string|max:255',
@@ -66,7 +66,7 @@ class NotificaController extends Controller
 
         // Validar los datos antes de actualizar
         $request->validate([
-            'dni' => 'nullable|exists:usuario_profesor,dni', // Asegura que el dni exista en usuario_profesor
+            'dni' => 'nullable|exists:usuario_estudiante,dni', // Asegura que el dni exista en usuario_estudiante
             'id_clase' => 'nullable|integer|exists:clase,id', // Asegura que id_clase exista en clase
             'fecha_envio' => 'nullable|date',
             'contenido' => 'nullable|string|max:255',
@@ -103,7 +103,7 @@ class NotificaController extends Controller
     {
         // Validar los parámetros de búsqueda
         $request->validate([
-            'dni' => 'nullable|exists:usuario_profesor,dni',
+            'dni' => 'nullable|exists:usuario_estudiante,dni',
             'id_clase' => 'nullable|integer|exists:clase,id',
             'fecha_envio' => 'nullable|date',
             'contenido' => 'nullable|string|max:255',
