@@ -16,6 +16,7 @@ class UsuarioProfesor extends Model
         'id',
         'especialidad',
         'media_calificacion',
+        'descripcion',
     ];
 
     /*
