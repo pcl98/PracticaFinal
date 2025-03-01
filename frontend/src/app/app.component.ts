@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
@@ -16,7 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
+  imports: [RouterOutlet, CommonModule, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
             CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, 
             PreguntasFrecuentesComponent, CabeceraComponent, LoginComponent, PieComponent],
   templateUrl: './app.component.html',
