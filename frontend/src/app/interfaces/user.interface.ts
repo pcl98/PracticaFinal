@@ -1,5 +1,5 @@
 export interface User {
-  id: number; // El ID es opcional porque no siempre se envía
+  id: number;
   nombre: string;
   apellido: string;
   email: string;
@@ -23,6 +23,7 @@ export interface Profesor {
   id: number;
   dni: string;
   especialidad: string;
+  descripcion: string;
   media_calificacion: number;
 }
 

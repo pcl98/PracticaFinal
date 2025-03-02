@@ -101,12 +101,4 @@ export class AuthService {
     const user = this.getUser();
     return user && user.tipo_usuario === 'Profesor'; 
   }
-
-
-  // Método para obtener el tipo de usuario (estudiante o profesor)
-  getTipoUsuario(): Observable<string | null> {
-    return this.getUserInfo().pipe(
-      map(userInfo => userInfo ? userInfo.tipo_usuario : null)
-    );
-  }
 }

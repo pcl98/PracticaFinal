@@ -78,6 +78,7 @@ export class RegistroComponent {
           const profesor: Profesor = {
             id: usuarioId,
             dni: this.dni,
+            descripcion: '',
             especialidad: this.especialidad || '', // Especialidad es opcional
             media_calificacion: 0,
           };

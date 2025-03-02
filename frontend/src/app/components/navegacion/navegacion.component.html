@@ -1,29 +1,22 @@
 <nav class="menu_principal">
-    <ul>
-        <li><a [routerLink]="['/inicio']">Inicio</a></li>
-        <li>
-            <select (change)="navigateTo($event)">
-                <option disabled selected>Clases</option>
-                <option value = "/clases/presencial">Presencial</option>
-                <option value = "/clases/online">Online</option>
-            </select>
-        </li>
-        <li><a [routerLink]="['/calendario']">Calendario</a></li>
-        <li>
-            <select (change)="navigateTo($event)">
-                <option disabled selected >Sobre nosotros</option>
-                <option value = "/profesores">Profesores</option>
-                <option value = "/nuestrahistoria">Nuestra historia</option>
-            </select>
-        </li>
-            
-        <li>
-            <select (change)="navigateTo($event)">
-                <option disabled selected>Ayuda</option>
-                <option value = "/contacto">Contacto</option>
-                <option value = "/preguntasfrecuentes">Preguntas frecuentes</option>
-            </select>
-        </li>
-        
-    </ul>
+    @if (this.authService.isLoggedIn()) {
+        <ul>
+            <li><a [routerLink]="['/inicio']">Inicio</a></li>
+            <li>
+                <select (change)="navigateTo($event)">
+                    <option disabled selected>Clases</option>
+                    <option value = "/clases/presencial">Presencial</option>
+                    <option value = "/clases/online">Online</option>
+                </select>
+            </li>
+            <li><a [routerLink]="['/calendario']">Calendario</a></li>
+            <li>
+                <select (change)="navigateTo($event)">
+                    <option disabled selected >Sobre nosotros</option>
+                    <option value = "/profesores">Profesores</option>
+                    <option value = "/nuestrahistoria">Nuestra historia</option>
+                </select>
+            </li>        
+        </ul>
+    }    
 </nav>
