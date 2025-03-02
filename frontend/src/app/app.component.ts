@@ -1,4 +1,7 @@
 import { Component, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { NavegacionComponent } from './components/navegacion/navegacion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
@@ -41,7 +44,7 @@ registerLocaleData(localeEs);
   imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
             CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, 
             PreguntasFrecuentesComponent, CabeceraComponent, LoginComponent, PieComponent, PerfilComponent,
-            CalendarHeaderComponent, CalendarModule, RegistroComponent],
+            CalendarHeaderComponent, CalendarModule, RegistroComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
