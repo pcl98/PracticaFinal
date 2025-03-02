@@ -1,1 +1,17 @@
-<p>profesores works!</p>
+<div class="profesores">
+  <div class="contenedor-profesores">
+    <h2>Conoce a nuestros profesores</h2>
+    <div class="profesor-card" *ngFor="let profesor of profesores">
+      <img [src]="profesor.imagen" [alt]="profesor.nombre" class="profesor-img" />
+      <div class="info">
+        <h3>{{ profesor.nombre }}</h3>
+        <p><strong>Especialidad:</strong> {{ profesor.especialidad }}</p>
+        <p><strong>Formación:</strong> {{ profesor.formacion }}</p>
+        <p><strong>Experiencia:</strong> {{ profesor.experiencia }}</p>
+        <p><strong>Estilo de enseñanza:</strong> {{ profesor.ensenanza }}</p>
+        <p><strong>Música favorita:</strong> {{ profesor.musica }}</p>
+        <p><strong>Cursos que imparte:</strong> {{ profesor.cursos }}</p>
+      </div>
+    </div>
+  </div>
+</div>

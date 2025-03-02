@@ -1,0 +1,60 @@
+.profesores {
+  background-image: url('/assets/images/fondo3.jpg');
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  height: 100vh;
+  font-family: "Verdana", sans-serif;
+}
+
+
+  .contenedor-profesores {
+    height: 100vh;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para mejor visualización */
+  }
+
+  .profesor-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 20px 0;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+
+  .info {
+    text-align: left;
+  }
+
+  h3 {
+    color: #333;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  .profesor-img {
+    width: 300px;
+    /* Ancho de 200px */
+    height: 250px;
+    /* Alto de 150px */
+    object-fit: cover;
+    /* Para que la imagen se ajuste sin deformarse */
+    border-radius: 20px;
+    /* Puedes ajustar el radio si quieres esquinas redondeadas */
+  }
+
+  h2 {
+    text-align: left;
+    /* Alinear a la izquierda */
+    margin-left: 20px;
+    /* Opcional: Separación desde el borde izquierdo */
+  }
