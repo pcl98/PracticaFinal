@@ -93,6 +93,7 @@ export class InicioComponent {
         this.titulo = `Clase presencial en ${this.proximoEvento.presencial.ubicacion}`;
       }
       else {
+        console.log(this.proximoEvento);
         this.titulo = this.proximoEvento.examen.titulo;
       }
       

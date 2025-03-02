@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-navegacion',
   imports: [RouterLink, RouterLinkActive],
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './navegacion.component.css'
 })
 export class NavegacionComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, public authService: AuthService) {}
 
   public navigateTo(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;

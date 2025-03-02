@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Profesor } from '../interfaces/user.interface';
+import { PaginatedResponse, Profesor } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class ProfesorService {
   /**
    * Obtener todos los profesores (paginados)
    */
-  getProfesores(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/profesores`);
+  getProfesores(): Observable<PaginatedResponse<Profesor>> {
+    return this.http.get<PaginatedResponse<Profesor>>(`${this.apiUrl}/profesores`);
   }
 
    /**

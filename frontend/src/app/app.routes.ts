@@ -5,8 +5,6 @@ import { PresencialComponent } from './components/presencial/presencial.componen
 import { OnlineComponent } from './components/online/online.component';
 import { ProfesoresComponent } from './components/profesores/profesores.component';
 import { NuestraHistoriaComponent } from './components/nuestra-historia/nuestra-historia.component';
-import { ContactoComponent } from './components/contacto/contacto.component';
-import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/preguntas-frecuentes.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -23,8 +21,6 @@ export const routes: Routes = [
     {path: 'calendario', component: CalendarioComponent},
     {path: 'profesores', component: ProfesoresComponent},
     {path: 'nuestrahistoria', component: NuestraHistoriaComponent},
-    {path: 'contacto', component: ContactoComponent},
-    {path: 'preguntasfrecuentes', component: PreguntasFrecuentesComponent},
     {path: 'login', component: LoginComponent },
     {path: 'perfil', component: PerfilComponent },
     {path: 'clases/online/addclase', component: AddClaseComponent },

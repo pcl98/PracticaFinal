@@ -22,16 +22,7 @@ class Usuario extends Authenticatable implements JWTSubject
         'contraseña',
         'email',
     ];
-
-    /*protected $hidden = [
-        'contraseña', // Oculta la contraseña en las respuestas JSON
-    ];*/
-
-    // Mutador para el hashing de contraseñas
-    /*public function setPasswordAttribute($value)
-    {
-        $this->attributes['contraseña'] = bcrypt($value);
-    }*/
+    
     public function getJWTIdentifier()
     {
         return $this->getKey(); // Normalmente, es el ID del usuario

@@ -71,12 +71,12 @@ class UsuarioController extends Controller
         }
 
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'nivel' => 'required|integer',
-            'tipo_usuario' => 'required|string|max:50',
-            'contraseña' => 'required|string|min:6',
-            'email' => 'required|email|unique:usuario,email,' . $usuario->id,
+            'nombre' => 'sometimes|string|max:255',
+            'apellido' => 'sometimes|string|max:255',
+            'nivel' => 'sometimes|integer',
+            'tipo_usuario' => 'sometimes|string|max:50',
+            'contraseña' => 'sometimes|string|min:6',
+            'email' => 'sometimes|email|unique:usuario,email,' . $usuario->id,
         ]);
 
         $usuario->update($request->all());
