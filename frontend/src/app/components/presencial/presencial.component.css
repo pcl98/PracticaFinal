@@ -179,3 +179,7 @@ h1:hover {
     text-shadow: 3px 3px 8px rgba(0, 191, 255, 0.6); 
     transition: all 0.3s ease; 
 }
+.eliminarClase{
+    background-color: red;
+    color:white;
+}

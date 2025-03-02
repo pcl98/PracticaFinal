@@ -39,6 +39,7 @@
         <option value = "Canto">Canto</option>
     </select>
     <button class="filtrar" (click)="filtrar()">Filtrar</button>
+    <button *ngIf="esProfesor" class ="addClase" (click)="addClase()">Añadir clase nueva</button>
     <div class="muestraClase">
         
         @for(clase of clasesFiltradas ; track $index){
@@ -48,7 +49,8 @@
             <p>Duración: {{ clase.duracion }} minutos</p>
             <p>Dificultad: {{clase.dificultad}}</p>
             <a [href]="clase.url_video" target="_blank">Pincha aquí para ver la clase</a>
-            
+           
+            <button *ngIf="esProfesor" class="eliminarClase" (click)="eliminarClase(clase.id)">Eliminar Clase</button>
             @switch(clase.instrumento){
                 @case ('Guitarra'){
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Classical_Guitar_two_views.jpg/180px-Classical_Guitar_two_views.jpg" class = "instrumentoImagen">
