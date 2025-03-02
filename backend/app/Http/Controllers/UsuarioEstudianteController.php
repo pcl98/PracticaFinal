@@ -10,6 +10,7 @@ use App\Models\UsuarioEstudiante;
 use App\Models\Pago;
 use App\Models\Asiste;
 use App\Models\Valora;
+use App\Models\Examen;
 
 class UsuarioEstudianteController extends Controller
 {
@@ -225,4 +226,57 @@ class UsuarioEstudianteController extends Controller
 
         return response()->json($valoraciones);
     }
+
+    /**
+     * Obtener exámenes
+     */
+    public function getExamenesByIdEstudiante($id)
+    {
+        // Buscar al estudiante
+        $estudiante = UsuarioEstudiante::findOrFail($id);
+
+        // Obtener los exámenes de todas las clases en las que está inscrito
+        $examenes = Examen::whereHas('clase', function ($query) use ($estudiante) {
+            $query->whereIn('id', $estudiante->clases->pluck('id'));
+        })->get();
+
+        return response()->json($examenes);
+    }
+
+    /**
+     * Obtener todas las clases online de un estudiante
+     */
+    public function getClasesOnlineByIdEstudiante($id)
+    {
+        // Buscar el estudiante por ID
+        $estudiante = UsuarioEstudiante::where('id', $id)->first();
+
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Obtener las clases online del estudiante
+        $clasesOnline = $estudiante->clases()->with('online')->get();
+
+        return response()->json($clasesOnline);
+    }
+
+    /**
+     * Obtener todas las clases presenciales de un estudiante
+     */
+    public function getClasesPresencialesByIdEstudiante($id)
+    {
+        // Buscar el estudiante por ID
+        $estudiante = UsuarioEstudiante::where('id', $id)->first();
+
+        if (!$estudiante) {
+            return response()->json(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        // Obtener las clases presenciales del estudiante
+        $clasesPresenciales = $estudiante->clases()->with('presencial')->get();
+
+        return response()->json($clasesPresenciales);
+    }
+
 }

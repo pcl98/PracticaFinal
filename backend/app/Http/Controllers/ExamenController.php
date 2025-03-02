@@ -12,7 +12,7 @@ class ExamenController extends Controller
      */
     public function index()
     {
-        $examenes = Examen::paginate(10);
+        $examenes = Examen::with('clase')->paginate(10);
         return response()->json($examenes);
     }
 
@@ -27,10 +27,17 @@ class ExamenController extends Controller
             'descripcion' => 'required|string',
             'nivel_dificultad' => 'required|numeric',
             'puntuacion' => 'required|numeric',
+            'fecha' => 'required|date', 
         ]);
 
         // Crear el registro
-        $examen = Examen::create($request->all());
+        $examen = Examen::create([
+            'titulo' => $request->titulo,
+            'descripcion' => $request->descripcion,
+            'nivel_dificultad' => $request->nivel_dificultad,
+            'puntuacion' => $request->puntuacion,
+            'fecha' => $request->fecha,
+        ]);
 
         return response()->json(['message' => 'Examen creado correctamente', 'examen' => $examen], 201);
     }
@@ -66,10 +73,17 @@ class ExamenController extends Controller
             'descripcion' => 'sometimes|string',
             'nivel_dificultad' => 'sometimes|numeric',
             'puntuacion' => 'sometimes|numeric',
+            'fecha' => 'sometimes|date',
         ]);
 
         // Actualizar el registro
-        $examen->update($request->all());
+        $examen->update([
+            'titulo' => $request->titulo ?? $examen->titulo,
+            'descripcion' => $request->descripcion ?? $examen->descripcion,
+            'nivel_dificultad' => $request->nivel_dificultad ?? $examen->nivel_dificultad,
+            'puntuacion' => $request->puntuacion ?? $examen->puntuacion,
+            'fecha' => $request->fecha ?? $examen->fecha,
+        ]);
 
         return response()->json(['message' => 'Examen actualizado correctamente', 'examen' => $examen]);
     }
@@ -101,6 +115,7 @@ class ExamenController extends Controller
             'descripcion' => 'sometimes|string',
             'nivel_dificultad' => 'sometimes|numeric',
             'puntuacion' => 'sometimes|numeric',
+            'fecha' => 'sometimes|date',
         ]);
 
         // Construir la consulta
@@ -120,6 +135,10 @@ class ExamenController extends Controller
 
         if ($request->has('puntuacion')) {
             $query->where('puntuacion', $request->puntuacion);
+        }
+
+        if ($request->has('fecha')) {
+            $query->whereDate('fecha', '=', $request->fecha);
         }
 
         // Paginar los resultados
@@ -145,6 +164,7 @@ class ExamenController extends Controller
             ->orWhere('descripcion', 'ilike', "%$query%")
             ->orWhere('nivel_dificultad', 'ilike', "%$query%")
             ->orWhere('puntuacion', 'ilike', "%$query%")
+            ->orWhereDate('fecha', '=', $request->query('fecha')) 
             ->paginate(10);
 
         return response()->json($examenes);

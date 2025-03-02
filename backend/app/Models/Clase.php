@@ -65,7 +65,15 @@ class Clase extends Model
      * Relación con tabla valora
      */
     public function valoraciones()
-{
-    return $this->hasMany(Valora::class, 'id_clase', 'id');
-}
+    {
+        return $this->hasMany(Valora::class, 'id_clase', 'id');
+    }
+
+    /**
+     * Relación uno a muchos con Examen.
+     */
+    public function examenes()
+    {
+        return $this->hasMany(Examen::class, 'id_clase');  // La clave ajena es 'id_clase'
+    }
 }

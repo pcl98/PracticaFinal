@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { forkJoin, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -69,11 +69,38 @@ export class EstudianteService {
       return this.http.get<any>(`${this.apiUrl}/estudiantes/${id}/pagos`);
     }
 
+    // Método para obtener las clases online de un estudiante
+    getClasesOnlineByEstudianteId(estudianteId: number): Observable<any[]> {
+      const url = `${this.apiUrl}/estudiantes/${estudianteId}/clases-online`;
+      return this.http.get<any[]>(url);
+    }
+
+    // Método para obtener las clases presenciales de un estudiante
+    getClasesPresencialesByEstudianteId(estudianteId: number): Observable<any[]> {
+      const url = `${this.apiUrl}/estudiantes/${estudianteId}/clases-presenciales`;
+      return this.http.get<any[]>(url);
+    }
+
     /**
      * Obtener clases de un estudiante
      */
-    getClasesByEstudianteId(id: number): Observable<any[]> {
-      return this.http.get<any>(`${this.apiUrl}/estudiantes/${id}/clases`);
+    getClasesByEstudianteId(estudianteId: number): Observable<any[]> {
+      return forkJoin([
+        this.getClasesOnlineByEstudianteId(estudianteId),
+        this.getClasesPresencialesByEstudianteId(estudianteId),
+      ]).pipe(
+        map(([clasesOnline, clasesPresenciales]) => {
+          // Combinar los datos sin transformarlos
+          return [...clasesOnline, ...clasesPresenciales];
+        })
+      );
+    }
+
+    /**
+     * Obtener exámenes
+     */
+    getexamenesByEstudianteId(id: number): Observable<any[]> {
+      return this.http.get<any>(`${this.apiUrl}/estudiantes/${id}/examenes`);
     }
 
     /**
