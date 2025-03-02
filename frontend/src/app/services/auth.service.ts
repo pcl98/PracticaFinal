@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api/login'; // URL de la API
   private isAuthenticated$ = new BehaviorSubject<boolean>(this.hasToken()); // Estado de autenticación
-  private userSubject = new BehaviorSubject<any>(this.getUser()); // Usuario actual, cargado desde localStorage
+  private userSubject = new BehaviorSubject<any>(this.getUser()); // Usuario actual, cargado desde sessionStorage
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -27,53 +27,67 @@ export class AuthService {
       })
     );
   }
-  
 
   /**
    * Realiza logout, eliminando el token y el usuario
    */
   logout(): void {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('user');
-    this.isAuthenticated$.next(false);
-    this.router.navigate(['/login']);
+    sessionStorage.removeItem('access_token'); // Elimina el token de sessionStorage
+    sessionStorage.removeItem('user'); // Elimina el usuario de sessionStorage
+    this.isAuthenticated$.next(false); // Actualiza el estado de autenticación
+    this.router.navigate(['/login']); // Redirige al usuario a la página de login
   }
 
   /**
    * Comprueba si el usuario está autenticado (hay un token)
    */
-  isLoggedIn(): Observable<boolean> {
-    return this.isAuthenticated$.asObservable();
+  isLoggedIn(): boolean {
+    return this.getToken() !== null;
   }
 
   /**
    * Guarda el token de autenticación
    */
   setToken(token: string): void {
-    localStorage.setItem('access_token', token);  // Guardamos el token en localStorage
-    this.isAuthenticated$.next(true);  // Actualizamos el estado de autenticación
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('access_token', token);
+      this.isAuthenticated$.next(true);
+    }
   }
 
+  /**
+   * Obtener el token del sessionStorage
+   */
+  getToken(): string | null {
+    return typeof sessionStorage !== 'undefined' ? sessionStorage.getItem('access_token') : null;
+  }
   /**
    * Comprueba si el token está presente
    */
   private hasToken(): boolean {
-    return !!localStorage.getItem('access_token');  // Verifica si hay un token
+    return typeof sessionStorage !== 'undefined' && !!sessionStorage.getItem('access_token');
   }
 
   /**
-   * Guarda los datos del usuario en el servicio y en localStorage
+   * Guarda los datos del usuario en el servicio y en sessionStorage
    */
   setUser(user: any): void {
-    this.userSubject.next(user);  // Actualiza el valor del usuario en el BehaviorSubject
-    localStorage.setItem('user', JSON.stringify(user));  // Guarda el usuario en localStorage
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('user', JSON.stringify(user));
+      this.userSubject.next(user);
+      console.log('Usuario guardado en sessionStorage:', user); // Verifica que se guarda
+    }
   }
 
   /**
    * Obtiene los datos del usuario
    */
   getUser(): any {
-    return JSON.parse(localStorage.getItem('user') || '{}');  // Recupera el usuario desde localStorage
+    if (typeof sessionStorage !== 'undefined') {
+      const user = sessionStorage.getItem('user');
+      return user ? JSON.parse(user) : null;
+    }
+    return null;
   }
 
   /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\UsuarioProfesor;
+use App\Models\Examen;
 
 class UsuarioProfesorController extends Controller
 {
@@ -171,4 +172,57 @@ class UsuarioProfesorController extends Controller
 
         return response()->json($clases);
     }
+
+    /**
+     * Obtener exámenes
+     */
+    public function getExamenesById($id)
+    {
+        // Buscar al profesor
+        $profesor = UsuarioProfesor::findOrFail($id);
+
+        // Obtener los exámenes de todas las clases que imparte
+        $examenes = Examen::whereHas('clase', function ($query) use ($profesor) {
+            $query->whereIn('id', $profesor->clases->pluck('id'));
+        })->get();
+
+        return response()->json($examenes);
+    }
+
+    /**
+     * Obtener todas las clases online de un profesor
+     */
+    public function getClasesOnlineByIdProfesor($id)
+    {
+        // Buscar el profesor por ID
+        $profesor = UsuarioProfesor::where('id', $id)->first();
+
+        if (!$profesor) {
+            return response()->json(['message' => 'Profesor no encontrado'], 404);
+        }
+
+        // Obtener las clases online del usuario
+        $clasesOnline = $profesor->clases()->with('online')->get();
+
+        return response()->json($clasesOnline);
+    }
+
+    /**
+     * Obtener todas las clases presenciales de un profesor
+     */
+    public function getClasesPresencialesByIdProfesor($id)
+    {
+        // Buscar el usuario por ID
+        $profesor = UsuarioProfesor::where('id', $id)->first();
+
+        if (!$profesor) {
+            return response()->json(['message' => 'Profesor no encontrado'], 404);
+        }
+
+        // Obtener las clases presenciales del usuario
+        $clasesPresenciales = $profesor->clases()->with('presencial')->get();
+
+        return response()->json($clasesPresenciales);
+    }
+
 }

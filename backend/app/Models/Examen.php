@@ -16,7 +16,17 @@ class Examen extends Model
         'descripcion',
         'nivel_dificultad',
         'puntuacion',
+        'id',
+        'fecha',
     ];
 
     public $timestamps = true;
+
+    /**
+     * Relación de muchos a uno con Clase.
+     */
+    public function clase()
+    {
+        return $this->belongsTo(Clase::class, 'id');  // La clave ajena es 'id_clase'
+    }
 }

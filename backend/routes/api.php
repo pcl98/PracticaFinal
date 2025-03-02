@@ -67,10 +67,13 @@ Route::post('/estudiantes', [UsuarioEstudianteController::class, 'store']);
 Route::get('/estudiantes/search-by-fields', [UsuarioEstudianteController::class, 'searchByFields']);
 Route::get('/estudiantes/search', [UsuarioEstudianteController::class, 'search']);
 Route::post('/estudiantes/notificaciones', [UsuarioEstudianteController::class, 'getNotificacionesByDniEstudiante']);
-Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByDniEstudiante']);
+Route::get('/estudiantes/{id}/clases', [UsuarioEstudianteController::class, 'getClasesByIdEstudiante']);
 Route::get('/estudiantes/{id}', [UsuarioEstudianteController::class, 'show']);
 Route::get('/estudiantes/{id}/pagos', [UsuarioEstudianteController::class, 'getPagosByIdEstudiante']);
 Route::get('/estudiantes/{id}/valoraciones', [UsuarioEstudianteController::class, 'getValoracionesById']);
+Route::get('/estudiantes/{id}/examenes', [UsuarioEstudianteController::class, 'getExamenesByIdEstudiante']);
+Route::get('/estudiantes/{id}/clases-online', [UsuarioEstudianteController::class, 'getClasesOnlineByIdEstudiante']);
+Route::get('/estudiantes/{id}/clases-presenciales', [UsuarioEstudianteController::class, 'getClasesPresencialesByIdEstudiante']);
 Route::patch('/estudiantes/{id}', [UsuarioEstudianteController::class, 'update']);
 Route::delete('/estudiantes/{id}', [UsuarioEstudianteController::class, 'destroy']);
 
@@ -81,6 +84,9 @@ Route::get('/profesores/search-by-fields', [UsuarioProfesorController::class, 's
 Route::get('/profesores/search', [UsuarioProfesorController::class, 'search']);
 Route::get('/profesores/{id}', [UsuarioProfesorController::class, 'show']);
 Route::get('/profesores/{id}/clases', [UsuarioProfesorController::class, 'getClasesByProfesor']);
+Route::get('/profesores/{id}/examenes', [UsuarioProfesorController::class, 'getExamenesById']);
+Route::get('/profesores/{id}/clases-online', [UsuarioProfesorController::class, 'getClasesOnlineByIdProfesor']);
+Route::get('/profesores/{id}/clases-presenciales', [UsuarioProfesorController::class, 'getClasesPresencialesByIdProfesor']);
 Route::patch('/profesores/{id}', [UsuarioProfesorController::class, 'update']);
 Route::delete('/profesores/{id}', [UsuarioProfesorController::class, 'destroy']);
 

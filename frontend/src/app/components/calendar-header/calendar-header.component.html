@@ -1,0 +1,10 @@
+<div class="calendar-header">
+  <!-- Botón para ir al día anterior -->
+  <button (click)="onPreviousMonth()">← Anterior</button>
+
+  <h2>{{ viewDate | date:'MMMM y' }}</h2>
+
+  <!-- Botón para ir al día siguiente -->
+  <button (click)="onNextMonth()">Siguiente →</button>
+</div>
+  

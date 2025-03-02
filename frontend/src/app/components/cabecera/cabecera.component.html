@@ -9,10 +9,18 @@
 
     <div class = "right-container">
       <!-- Icono de notificación -->
-      @if (isUserAuthenticated) 
+      @if (this.authService.isLoggedIn()) 
       {
-        <img id="noti" src="assets/images/noti_white.png" alt="Notificación"
-        (click)="abrirNotificaciones()">
+        @if(this.authService.getUser().tipo_usuario == "Estudiante") {
+          <app-notificaciones 
+            #notificacionesComponent
+            [mostrarNotificaciones]="mostrarNotificaciones"
+            (mostrarNotificacionesChange)="mostrarNotificaciones = $event">
+          </app-notificaciones>
+
+            <img id="noti" src="assets/images/noti_white.png" alt="Notificación"
+            (click)="notificacionesComponent.abrirNotificaciones()">            
+          } 
       }
       
       <div class="profile-menu">
@@ -22,9 +30,9 @@
 
         @if (menuOpen) {
           <ul class="dropdown">
-            @if (!isUserAuthenticated) {
+            @if (!this.authService.isLoggedIn()) {
               <li (click)="redirigirLogin()">Iniciar sesión</li>
-              <li><a routerLink="/register">Registrarse</a></li>
+              <li (click)="redirigirRegistro()">Registrarse</li>
             }
             @else {
               <li (click)="redirigirPerfil()">Ver perfil</li>
@@ -44,8 +52,6 @@
     
   </div>
 
-  <app-notificaciones 
-  [mostrarNotificaciones]="mostrarNotificaciones"
-  (mostrarNotificacionesChange)="mostrarNotificaciones = $event"></app-notificaciones>
+  
   
 

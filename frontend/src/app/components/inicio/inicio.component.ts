@@ -8,21 +8,19 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  nombreUsuario: string = '';
+  nombreUsuario: string = 'usuario';
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    const user = this.authService.getUser();
-    this.nombreUsuario = user.nombre || 'Usuario'; // Usamos un valor predeterminado si no está disponible
+    if (this.isUserAuthenticated) {
+      const user = this.authService.getUser();
+      this.nombreUsuario = user.nombre;
+    }
   }
 
   // Comprobar si el usuario está autenticado
   get isUserAuthenticated(): boolean {
-    let isAuth = false;
-    this.authService.isLoggedIn().subscribe(value => {
-      isAuth = value;
-    });
-    return isAuth;
+    return this.authService.isLoggedIn();
   }
 }
