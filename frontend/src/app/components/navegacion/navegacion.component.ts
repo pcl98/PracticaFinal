@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navegacion',
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navegacion.component.html',
   styleUrl: './navegacion.component.css'
 })
