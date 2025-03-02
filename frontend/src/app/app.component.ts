@@ -19,6 +19,7 @@ import { CalendarDateFormatter, CalendarModule, CalendarEventTitleFormatter } fr
 import { CustomDateFormatter } from './providers/custom-date-formatter.provider';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { RegistroComponent } from './components/registro/registro.component';
 
 registerLocaleData(localeEs);
 
@@ -40,7 +41,7 @@ registerLocaleData(localeEs);
   imports: [RouterOutlet, NavegacionComponent, InicioComponent, PresencialComponent, OnlineComponent, 
             CalendarioComponent, ProfesoresComponent, NuestraHistoriaComponent, ContactoComponent, 
             PreguntasFrecuentesComponent, CabeceraComponent, LoginComponent, PieComponent, PerfilComponent,
-            CalendarHeaderComponent, CalendarModule],
+            CalendarHeaderComponent, CalendarModule, RegistroComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

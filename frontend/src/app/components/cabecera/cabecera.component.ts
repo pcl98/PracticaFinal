@@ -44,8 +44,12 @@ export class CabeceraComponent {
     this.router.navigate(['/perfil']);
   }
 
+  redirigirRegistro():void {
+    this.menuOpen = !this.menuOpen;
+    this.router.navigate(['/registro']);
+  }
+
   ngOnInit(): void {
-    // Obtener la información del usuario al inicializar el componente
   }
 
   logout(): void {

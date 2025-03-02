@@ -1,7 +1,35 @@
 <div class="perfil-container">
-    <h2>Información del Usuario</h2>
+  <h2>Información del Usuario</h2>
+
+  <!-- Mensajes de éxito y error -->
+   @if(successMessage) {
+    <div class="alert success">
+      {{ successMessage }}
+    </div>
+   }
+  @else if (errorMessage){
+    <div class="alert error">
+      {{ errorMessage }}
+    </div>
+  }
   
-    <form (ngSubmit)="onSubmit()">
+
+  <!-- Modo visualización -->
+   @if (!isEditing) {
+    <div class="view-mode">
+      <p><strong>Nombre:</strong> {{ user.nombre }}</p>
+      <p><strong>Apellidos:</strong> {{ user.apellido }}</p>
+      <p><strong>Correo electrónico:</strong> {{ user.email }}</p>
+      @if(this.isProfesor) {
+        <p><strong>Especialidad:</strong> {{ this.profesor.especialidad }}</p>
+      }
+      <button (click)="toggleEdit()" class="edit-button">Editar perfil</button>
+    </div>
+   }
+  
+   @else {
+    <!-- Modo edición -->
+    <form (ngSubmit)="onSubmit()" class="edit-mode">
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input
@@ -12,18 +40,18 @@
           required
         />
       </div>
-  
+
       <div class="form-group">
         <label for="apellidos">Apellidos</label>
         <input
           type="text"
           id="apellidos"
-          [(ngModel)]="user.apellidos"
+          [(ngModel)]="user.apellido"
           name="apellidos"
           required
         />
       </div>
-  
+
       <div class="form-group">
         <label for="email">Correo electrónico</label>
         <input
@@ -34,7 +62,7 @@
           required
         />
       </div>
-  
+
       <div class="form-group">
         <label for="password">Nueva contraseña</label>
         <input
@@ -42,10 +70,39 @@
           id="password"
           [(ngModel)]="user.password"
           name="password"
+          placeholder=""
         />
       </div>
-  
-      <button type="submit">Guardar cambios</button>
+
+      <div class="form-actions">
+        <button type="button" (click)="toggleEdit()" class="cancel-button">Cancelar</button>
+        <button type="submit" class="save-button">Guardar cambios</button>
+      </div>
     </form>
-  </div>
+   }
+
+   @if (!isProfesor && pagos.length>0) {
+    <div class="pagos-section">
+      <h3>Pagos realizados</h3>
+      <table class="pagos-table">
+        <thead>
+          <tr>
+            <th>Fecha de pago</th>
+            <th>Método de pago</th>
+            <th>Cantidad</th>
+            <th>Concepto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pago of pagos">
+            <td>{{ pago.fecha_pago | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ pago.metodo_pago }}</td>
+            <td>{{ pago.cantidad }} €</td>
+            <td>{{ pago.concepto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+   }
   
+</div>

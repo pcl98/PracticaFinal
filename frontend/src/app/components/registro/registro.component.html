@@ -1,0 +1,115 @@
+<div class="registro-container">
+    <h2>Registro de Usuario</h2>
+  
+    <!-- Mensajes de éxito y error -->
+     @if (successMessage) {
+        <div class="alert success">
+            {{ successMessage }}
+        </div>
+     }
+    @else if (errorMessage) {
+        <div class="alert error">
+            {{ errorMessage }}
+        </div>
+    }
+  
+    <!-- Formulario de registro -->
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input
+          type="text"
+          id="nombre"
+          [(ngModel)]="user.nombre"
+          name="nombre"
+          required
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input
+          type="text"
+          id="apellido"
+          [(ngModel)]="user.apellido"
+          name="apellido"
+          required
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="user.email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="dni">DNI</label>
+        <input
+          type="text"
+          id="dni"
+          [(ngModel)]="this.dni"
+          name="dni"
+          required
+        />
+      </div>
+  
+      <div class="form-group">
+        <label>Tipo de usuario</label>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="tipoUsuario"
+              value="estudiante"
+              [(ngModel)]="user.tipo_usuario"
+              (change)="isProfesor = false"
+            />
+            Estudiante
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="tipoUsuario"
+              value="profesor"
+              [(ngModel)]="user.tipo_usuario"
+              (change)="isProfesor = true"
+            />
+            Profesor
+          </label>
+        </div>
+      </div>
+  
+      @if (isProfesor){
+        <div class="form-group">
+            <label for="especialidad">Especialidad</label>
+            <input
+            type="text"
+            id="especialidad"
+            [(ngModel)]="this.especialidad"
+            name="especialidad"
+            />
+        </div>
+      }      
+  
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <input
+          type="password"
+          id="contrasena"
+          [(ngModel)]="user.password"
+          name="contrasena"
+          required
+        />
+      </div>
+  
+      <button type="submit" class="btn-registro">Registrarse</button>
+    </form>
+  </div>
+
+  

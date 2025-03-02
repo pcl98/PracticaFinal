@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Profesor } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class ProfesorService {
   getProfesores(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/profesores`);
   }
+
+   /**
+     * Crear un nuevo profesor
+     */
+    createProfesor(profesor: Profesor): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/profesores`, profesor);
+    }
+  
 
   /**
    * Obtener un profesor por su ID

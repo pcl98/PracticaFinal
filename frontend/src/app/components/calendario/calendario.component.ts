@@ -56,7 +56,6 @@ export class CalendarioComponent implements OnInit {
   }
 
   cargarEventos(): void {
-    console.log(this.authService.getUser().tipo_usuario);
     if (this.authService.getUser().tipo_usuario == "Estudiante") {
       
       this.estudianteService.getClasesByEstudianteId(this.authService.getUser().id).subscribe(clases => {
@@ -92,7 +91,7 @@ export class CalendarioComponent implements OnInit {
     }
 
     else {
-      this.profesorService.getClasesByProfesorId(this.authService.getUser().tipo_usuario).subscribe(clases => {
+      this.profesorService.getClasesByProfesorId(this.authService.getUser().id).subscribe(clases => {
         this.events.push(...clases.map(clase => {
           let title = '';
           let cssClass = '';
@@ -114,7 +113,7 @@ export class CalendarioComponent implements OnInit {
         }));
       });
   
-      this.examenService.getExamenesByProfesorId(this.authService.getUser().tipo_usuario).subscribe(examenes => {
+      this.examenService.getExamenesByProfesorId(this.authService.getUser().id).subscribe(examenes => {
         this.events.push(...examenes.map(examen => ({
           title: `${examen.titulo} - ${examen.descripcion}`,
           start: new Date(examen.fecha),

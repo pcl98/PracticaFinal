@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable, tap } from 'rxjs';
+import { PaginatedResponse, Pago } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -65,8 +66,8 @@ export class EstudianteService {
     /**
      * Obtener pagos de un estudiante
      */
-    getPagosByEstudianteId(id: number): Observable<any[]> {
-      return this.http.get<any>(`${this.apiUrl}/estudiantes/${id}/pagos`);
+    getPagosByEstudianteId(id: number): Observable<PaginatedResponse<Pago>> {
+      return this.http.get<PaginatedResponse<Pago>>(`${this.apiUrl}/estudiantes/${id}/pagos`);
     }
 
     // Método para obtener las clases online de un estudiante

@@ -32,7 +32,7 @@
           <ul class="dropdown">
             @if (!this.authService.isLoggedIn()) {
               <li (click)="redirigirLogin()">Iniciar sesión</li>
-              <li><a routerLink="/register">Registrarse</a></li>
+              <li (click)="redirigirRegistro()">Registrarse</li>
             }
             @else {
               <li (click)="redirigirPerfil()">Ver perfil</li>
