@@ -10,6 +10,7 @@ import { PreguntasFrecuentesComponent } from './components/preguntas-frecuentes/
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { AddClaseComponent } from './components/add-clase/add-clase.component';
 
 
 export const routes: Routes = [
@@ -25,5 +26,6 @@ export const routes: Routes = [
     {path: 'preguntasfrecuentes', component: PreguntasFrecuentesComponent},
     {path: 'login', component: LoginComponent },
     {path: 'perfil', component: PerfilComponent },
+    {path: 'clases/online/addclase', component: AddClaseComponent },
     
 ];

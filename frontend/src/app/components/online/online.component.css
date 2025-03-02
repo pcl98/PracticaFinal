@@ -180,3 +180,15 @@ h1:hover {
     transition: all 0.3s ease; 
 }
 
+.eliminarClase{
+    background-color: red;
+    color:white;
+}
+
+.addClase{
+    background-color: green;
+    color:white;
+    position: relative;
+    bottom: 200px;
+    left: 1200px;
+}
