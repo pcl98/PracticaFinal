@@ -1,1 +1,17 @@
-<p>calendario works!</p>
+
+<div class="fondo">
+  <calendar-header 
+    [(view)]="view" 
+    [(viewDate)]="viewDate">
+  </calendar-header>
+
+  <div class="calendar-container" *ngIf="events.length > 0">
+      <mwl-calendar-month-view
+      [viewDate]="viewDate"
+      [events]="events"
+      [activeDayIsOpen]="this.activeDayIsOpen"
+      [weekStartsOn]="weekStartsOn"
+      (dayClicked)="onDayClick($event)">
+    </mwl-calendar-month-view>  
+  </div>
+</div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clase;
+use App\Models\ClasePresencial;
+use App\Models\ClaseOnline;
 use Illuminate\Http\Request;
 
 class ClaseController extends Controller
@@ -12,8 +14,8 @@ class ClaseController extends Controller
      */
     public function index()
     {
-        $clases = Clase::all(); // Obtiene todas las clases
-        return response()->json($clases); // Devuelve en JSON
+        $clases = Clase::paginate(10);
+        return response()->json($clases);
     }
 
     /**
@@ -88,5 +90,124 @@ class ClaseController extends Controller
         $clase->delete();
 
         return response()->json(['message' => 'Clase eliminada']);
+    }
+
+
+    /**
+     * Búsqueda por campos específicos
+     */
+    public function searchByFields(Request $request)
+    {
+        $request->validate([
+            'instrumento' => 'sometimes|string|max:255',
+            'dificultad' => 'sometimes|string|max:50',
+            'duracion' => 'sometimes|integer',
+            'max_alumnos' => 'sometimes|integer',
+            'precio' => 'sometimes|numeric',
+            'profesor_id' => 'sometimes|integer|exists:usuario,id',
+        ]);
+
+        $query = Clase::query();
+
+        if ($request->has('instrumento')) {
+            $query->where('instrumento', 'ilike', '%' . $request->instrumento . '%');
+        }
+
+        if ($request->has('dificultad')) {
+            $query->where('dificultad', 'ilike', '%' . $request->dificultad . '%');
+        }
+
+        if ($request->has('duracion')) {
+            $query->where('duracion', $request->duracion);
+        }
+
+        if ($request->has('max_alumnos')) {
+            $query->where('max_alumnos', $request->max_alumnos);
+        }
+
+        if ($request->has('precio')) {
+            $query->where('precio', $request->precio);
+        }
+
+        if ($request->has('profesor_id')) {
+            $query->where('profesor_id', $request->profesor_id);
+        }
+
+        $clases = $query->paginate(10);
+
+        return response()->json($clases);
+    }
+
+
+    /**
+     * Búsqueda completa en todos los campos.
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string|min:1', // Texto de búsqueda
+        ]);
+
+        $query = $request->input('query'); // Texto de búsqueda
+
+        // Búsqueda en múltiples campos
+        $clases = Clase::where('instrumento', 'ilike', "%$query%")
+            ->orWhere('dificultad', 'ilike', "%$query%")
+            ->orWhere('duracion', 'ilike', "%$query%")
+            ->orWhere('max_alumnos', 'ilike', "%$query%")
+            ->orWhere('precio', 'ilike', "%$query%")
+            ->paginate(10);
+
+        return response()->json($clases);
+    }
+
+    // Obtener todas las clases presenciales
+    public function getClasesPresenciales()
+    {
+        $clases = ClasePresencial::all();
+        return response()->json($clases);
+    }
+
+    // Obtener todas las clases online
+    public function getClasesOnline()
+    {
+        $clases = ClaseOnline::all();
+        return response()->json($clases);
+    }
+
+    /**
+     * Obtener todos los estudiantes que asisten a una clase
+     */
+    public function getEstudiantesByIdClase($id)
+    {
+        // Buscar la clase por ID
+        $clase = Clase::where('id', $id)->first();
+
+        if (!$clase) {
+            return response()->json(['message' => 'Clase no encontrada'], 404);
+        }
+
+        // Obtener las clases a las que ha asistido
+        $estudiantes = $clase->estudiantes;
+
+        return response()->json($estudiantes);
+    }
+
+    /**
+     * Obtener profesor
+     */
+    public function getProfesorByClase($idClase)
+    {
+        // Buscar la clase por su ID
+        $clase = Clase::find($idClase);
+
+        if (!$clase) {
+            return response()->json(['message' => 'Clase no encontrada'], 404);
+        }
+
+        // Obtener el profesor que imparte la clase usando la relación
+        $profesor = $clase->profesor;
+
+        return response()->json($profesor);
     }
 }

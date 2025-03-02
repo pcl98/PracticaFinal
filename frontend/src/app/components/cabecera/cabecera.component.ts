@@ -1,28 +1,31 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { NotificacionesComponent } from '../notificaciones/notificaciones.component';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cabecera',
   templateUrl: './cabecera.component.html',
   styleUrls: ['./cabecera.component.css'],
-  imports: [NotificacionesComponent]
+  imports: [NotificacionesComponent, CommonModule]
 })
 
 export class CabeceraComponent {
   mostrarNotificaciones:boolean = false;
   menuOpen = false;
+  usuario: any = null;
 
-  constructor(public authService: AuthService, private router: Router) {
+  @ViewChild('notificacionesComponent') notificacionesComponent: NotificacionesComponent | undefined;
 
-  }
+  constructor(public authService: AuthService, private router: Router) {}
 
   // Este método emite el evento para abrir la ventana de notificaciones
   abrirNotificaciones():void {
-    this.mostrarNotificaciones = !this.mostrarNotificaciones;
-    console.log(this.mostrarNotificaciones);
+    if (this.notificacionesComponent) {
+      this.notificacionesComponent.abrirNotificaciones();
+    }
   }
 
   toggleMenu(): void {
@@ -31,16 +34,22 @@ export class CabeceraComponent {
 
   // Redirigir a la página del login
   redirigirLogin():void {
+    this.menuOpen = !this.menuOpen;
     this.router.navigate(['/login']);
   }
 
-  // Comprobar si el usuario está autenticado
-  get isUserAuthenticated(): boolean {
-    let isAuth = false;
-    this.authService.isLoggedIn().subscribe(value => {
-      isAuth = value;
-    });
-    return isAuth;
+  // Redirigir a la página del perfil
+  redirigirPerfil():void {
+    this.menuOpen = !this.menuOpen;
+    this.router.navigate(['/perfil']);
+  }
+
+  redirigirRegistro():void {
+    this.menuOpen = !this.menuOpen;
+    this.router.navigate(['/registro']);
+  }
+
+  ngOnInit(): void {
   }
 
   logout(): void {

@@ -1,9 +1,60 @@
-
 .inicio {
-    background-image: url('/assets/images/fondo3.jpg');
-    background-size: cover;
-    background-position: center; 
-    background-repeat: no-repeat; 
-    height: 100vh;
-    
+    background-image: url('../../../../public/assets/images/fondo3.jpg');
 }
+
+.home-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .btn-registro {
+    padding: 12px 24px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-registro:hover {
+    background-color: #45a049;
+  }
+
+  .proximo-evento {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .proximo-evento h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .proximo-evento p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }

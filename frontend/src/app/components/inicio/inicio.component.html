@@ -1,7 +1,26 @@
 <div class="inicio">
-    @if(isUserAuthenticated) {
-        <h1>¡Hola, {{nombreUsuario}}!</h1>
-    }    
+    <div class="home-container">
+        @if(isUserAuthenticated) {
+            <h1>¡Hola, {{user.nombre}}!</h1>
+            @if(proximoEvento) {
+                <div class="proximo-evento">
+                    <h3>Próximo evento:</h3>
+                    <p> {{ titulo }}</p>
+                    <p><strong>Fecha:</strong> {{ formatearFecha(proximoEvento.fecha) }}</p>
+                </div>
+            }
+            @else {
+                <p>No tienes clases o exámenes pendientes.</p>
+            }
+        }    
+        @else {
+            <ng-template #noRegistrado>
+                <h2>Bienvenido a la Academia de Música Agua Dulce</h2>
+                <p>¡Regístrate para comenzar!</p>
+            </ng-template>
+        }
+    </div>
 </div>
+
 
 

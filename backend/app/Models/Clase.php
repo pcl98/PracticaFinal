@@ -20,5 +20,60 @@ class Clase extends Model
         'profesor_id',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
+
+    /**
+     * Relación con la tabla asiste
+     */
+    public function asiste() {
+        return $this->hasMany(Asiste::class, 'id_clase', 'id');
+    }
+
+    /**
+     * Relación con la tabla clase_online
+     */
+    public function online()
+    {
+        return $this->hasOne(ClaseOnline::class, 'id', 'id');
+    }
+
+    /**
+     * Relación con la tabla clase_presencial
+     */
+    public function presencial()
+    {
+        return $this->hasOne(ClasePresencial::class, 'id', 'id');
+    }
+
+    /**
+     * Devuelve los estudiantes que asisten a una clase
+     */
+    public function estudiantes()
+    {
+        return $this->belongsToMany(UsuarioEstudiante::class, 'asiste', 'id_clase', 'dni', 'id', 'dni');
+    }
+
+    /**
+     * Relación con la tabla usuario_profesor (una clase pertenece a un profesor)
+     */
+    public function profesor()
+    {
+        return $this->belongsTo(UsuarioProfesor::class, 'profesor_id', 'id');
+    }
+
+    /**
+     * Relación con tabla valora
+     */
+    public function valoraciones()
+    {
+        return $this->hasMany(Valora::class, 'id_clase', 'id');
+    }
+
+    /**
+     * Relación uno a muchos con Examen.
+     */
+    public function examenes()
+    {
+        return $this->hasMany(Examen::class, 'id_clase');  // La clave ajena es 'id_clase'
+    }
 }

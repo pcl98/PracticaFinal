@@ -1,5 +1,5 @@
 
-.presencial {
+.online {
     background-image: url('/assets/images/fondo3.jpg');
     background-size: cover;
     background-position: center; 
@@ -24,12 +24,43 @@
     left: 10px;
 }
 
-.filtrar{
+
+
+/* Estilo del botón */
+.filtrar {
+    background-color:#fff;
+    border: none; 
+    padding: 12px 20px; 
+    font-size: 16px; 
+    font-family: Arial, sans-serif; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
     position: relative;
-    left: 400px;
-    top: 80px;
+    left: 300px;
+    top: 60px;
     font-family: "Verdana", sans-serif;
 }
+
+/* Efecto cuando el cursor pasa por encima */
+.filtrar:hover {
+    background-color: #cce4ff; 
+    box-shadow: 0 0 10px rgba(0, 102, 204, 0.5); 
+}
+
+/* Efecto al hacer clic */
+.filtrar:active {
+    background-color: #004a8d; 
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); 
+}
+
+/* Efecto cuando el botón está en foco (cuando está seleccionado o con el foco del teclado) */
+.filtrar:focus {
+    outline: none; 
+    border: 2px solid #0066cc; 
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5); 
+}
+
 .dificultad{
     position: relative;
     top: 20px;
@@ -56,4 +87,99 @@
     top: -150px;
     left: 600px;
     border-radius: 20px;
+    overflow-y: auto;
+}
+
+
+
+.muestraClase h3{
+    margin-left: 20px; 
+    padding-top: 20px; 
+}
+.muestraClase p{
+    margin-left: 20px; 
+}
+
+
+.muestraClase hr {
+    margin-top: 20px; 
+}
+
+
+.instrumentoImagen{
+    width: 120px;  
+    height: auto;
+    position: relative;
+    left: 600px;
+    bottom: 50px;
+}
+
+
+#instrumentos {
+    background-color: #f0f8ff; 
+    color: #333; 
+    border: 2px solid #00509e; 
+    padding: 10px 15px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    border-radius: 8px; 
+    transition: all 0.3s ease-in-out;
+    width: 80%; 
+    max-width: 150px; 
+    position: relative;
+    left: 400px;
+    bottom: 100px;
+}
+
+#instrumentos:focus {
+    border-color: #0066cc; 
+    box-shadow: 0 0 5px rgba(0, 102, 204, 0.5); 
+}
+
+/* Estilo de las opciones */
+#instrumentos option {
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+#instrumentos option:hover {
+    background-color: #cce4ff; 
+}
+
+select {
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjYwMCI+PHBhdGggZD0iTTEwMCAwTDIwMCA1MDAwIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMjAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg=='); /* Estilo personalizado para el icono de la flecha */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+
+h1 {
+    font-family: 'Arial', sans-serif; 
+    font-size: 50px; 
+    color: white; 
+    text-align: center; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    letter-spacing: 5px; 
+    padding: 20px 0; 
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); 
+    margin: 0; 
+}
+
+h1:hover {
+    color: #00bfff; 
+    text-shadow: 3px 3px 8px rgba(0, 191, 255, 0.6); 
+    transition: all 0.3s ease; 
+}
+.eliminarClase{
+    background-color: red;
+    color:white;
 }

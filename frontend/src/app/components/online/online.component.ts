@@ -2,26 +2,45 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClaseService } from '../../services/clase.service';
 import { Console } from 'console';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-online',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './online.component.html',
   styleUrl: './online.component.css',
-  providers: [ClaseService]
-})
+  providers: [ClaseService, AuthService]
+}) 
 export class OnlineComponent {
   clases : any[]  = [];
   public instrumento:string = '';
   clasesFiltradas : any[] = [];
   dificultad:string = '';
+  esProfesor = false;
 
-  constructor(private router: Router, private claseService: ClaseService) {
+
+  constructor(private router: Router, private claseService: ClaseService, private authService: AuthService) {
     this.instrumento = 'Instrumento';
   }
   
   ngOnInit() {
-    this.obtenerClases(); 
+    this.claseService.getClases().subscribe((response: any) => {
+      this.clases = Array.isArray(response.data) ? response.data : [];
+      console.log("Clases asignadas:", this.clases);
+
+      this.clases.forEach((clase, index) => {
+        this.claseService.getClasesOnline(clase.id).subscribe((detalles: any) => {
+          this.clases[index].titulo = detalles.titulo;
+          this.clases[index].url_video = detalles.url_video;
+    
+        });
+      });
+    }); 
+    this.authService.getUserObservable().subscribe((usuario) => {
+      this.esProfesor = this.authService.esProfesor();
+    });
   }
 
   public cambioCheckClase(tipoclase:string){
@@ -31,6 +50,7 @@ export class OnlineComponent {
       presencialCheck.checked = false;
     } else if (tipoclase == 'presencial' && presencialCheck.checked) {
       onlineCheck.checked = false;
+
     }
   }
 
@@ -39,7 +59,8 @@ export class OnlineComponent {
     const presencialCheck = document.getElementById('presencial-chck') as HTMLInputElement;
 
     if (presencialCheck.checked){
-      this.router.navigate(['/presencial']);
+
+      this.router.navigate(['/clases/presencial']);
     }
     this.dificultad = this.getDificultad();
     this.clasesFiltradas = this.getClasesFiltro();
@@ -64,11 +85,26 @@ export class OnlineComponent {
   }
 
   private obtenerClases() {
-    this.claseService.getClases().subscribe((data: any[]) => {
-      this.clases = data;
-      this.filtrar(); 
+    this.claseService.getClases().subscribe((response: any) => {
+      this.clases = Array.isArray(response.data) ? response.data : [];
+      console.log("Clases asignadas:", this.clases);
+
+      this.clases.forEach((clase, index) => {
+        this.claseService.getClasesOnline(clase.id).subscribe((detalles: any) => {
+          this.clases[index].titulo = detalles.titulo;
+          this.clases[index].url_video = detalles.url_video;
+
+          if (index === this.clases.length - 1) {
+            this.filtrar();
+          }
+        });
+      });
     });
   }
+  
+  
+  
+  
 
   public getClasesFiltro():any[]{
     let clases_aux: any[] = [];
@@ -109,4 +145,16 @@ export class OnlineComponent {
     const selectInstrumento = document.getElementById('instrumentos') as HTMLSelectElement;
     this.instrumento = selectInstrumento.value;
   }
+
+  public eliminarClase(id:number){
+    if (!confirm('¿Estás seguro de eliminar esta clase?')) return;
+    this.claseService.eliminarClase(id);
+    alert('Clase eliminada con éxito')
+    location.reload();
+    
+  }
+public addClase(){
+  this.router.navigate(['/clases/online/addclase']);
 }
+}
+

@@ -4,8 +4,8 @@
         <li>
             <select (change)="navigateTo($event)">
                 <option disabled selected>Clases</option>
-                <option value = "/presencial">Presencial</option>
-                <option value = "/online">Online</option>
+                <option value = "/clases/presencial">Presencial</option>
+                <option value = "/clases/online">Online</option>
             </select>
         </li>
         <li><a [routerLink]="['/calendario']">Calendario</a></li>

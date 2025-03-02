@@ -13,16 +13,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::paginate(15);
         return response()->json(($usuarios));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -45,13 +37,12 @@ class UsuarioController extends Controller
 
         // Cifrar la contraseña antes de guardarla
         $data = $request->all();
-        //$data['contraseña'] = bcrypt($data['contraseña']); // Asegúrate de cifrar la contraseña
+        //$data['contraseña'] = bcrypt($data['contraseña']);
 
         $usuario = Usuario::create($data);
 
         return response()->json(['message' => 'Usuario creado correctamente', 'usuario' => $usuario], 201);
     }
-
 
 
     /**
@@ -69,14 +60,6 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Actualizar un usuario
      */
     public function update(Request $request, $id)
@@ -88,12 +71,12 @@ class UsuarioController extends Controller
         }
 
         $request->validate([
-            'nombre' => 'string|max:255',
-            'apellido' => 'string|max:255',
-            'nivel' => 'integer',
-            'tipo_usuario' => 'string|max:50',
-            'contraseña' => 'string|min:6',
-            'email' => 'email|unique:USUARIO,email,' . $usuario->id,
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'nivel' => 'required|integer',
+            'tipo_usuario' => 'required|string|max:50',
+            'contraseña' => 'required|string|min:6',
+            'email' => 'required|email|unique:usuario,email,' . $usuario->id,
         ]);
 
         $usuario->update($request->all());
@@ -115,6 +98,70 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return response()->json(['message' => 'Usuario eliminado correctamente']);
+    }
+
+    /**
+     * Búsqueda por campos específicos.
+     */
+    public function searchByFields(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'sometimes|string|max:255',
+            'apellido' => 'sometimes|string|max:255',
+            'nivel' => 'sometimes|integer',
+            'tipo_usuario' => 'sometimes|string|max:50',
+            'email' => 'sometimes|email',
+        ]);
+
+        $query = Usuario::query();
+
+        if ($request->has('nombre')) {
+            $query->where('nombre', 'ilike', '%' . $request->nombre . '%');
+        }
+
+        if ($request->has('apellido')) {
+            $query->where('apellido', 'ilike', '%' . $request->apellido . '%');
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', 'ilike', '%' . $request->email . '%');
+        }
+
+        if ($request->has('tipo_usuario')) {
+            $query->where('tipo_usuario', 'ilike', '%' . $request->tipo_usuario . '%');
+        }
+
+        if ($request->has('nivel')) {
+            $nivel = (int)$request->nivel; // Convierte a entero
+            $query->where('nivel', $nivel);
+        }
+
+        $usuarios = $query->paginate(10);
+
+        return response()->json($usuarios);
+    }
+
+
+    /**
+     * Búsqueda completa en todos los campos.
+     */
+    public function search(Request $request)
+    {
+        $request->validate([
+            'query' => 'required|string|min:1', // Texto de búsqueda
+        ]);
+
+        $query = $request->input('query'); // Texto de búsqueda
+
+        // Búsqueda en todos los campos
+        $usuarios = Usuario::where('nombre', 'ilike', "%$query%")
+            ->orWhere('apellido', 'ilike', "%$query%")
+            ->orWhere('email', 'ilike', "%$query%")
+            ->orWhere('tipo_usuario', 'ilike', "%$query%")
+            ->orWhere('nivel', 'ilike', "%$query%")
+            ->paginate(10);
+
+        return response()->json($usuarios);
     }
 
 }
