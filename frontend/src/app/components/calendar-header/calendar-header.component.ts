@@ -16,27 +16,15 @@ export class CalendarHeaderComponent {
 
   CalendarView = CalendarView;
 
-  onPreviousDay(): void {
+  onPreviousMonth(): void {
     const newDate = new Date(this.viewDate);
-    if (this.view === CalendarView.Month) {
-      newDate.setMonth(newDate.getMonth() - 1);
-    } else if (this.view === CalendarView.Week) {
-      newDate.setDate(newDate.getDate() - 7);
-    } else {
-      newDate.setDate(newDate.getDate() - 1);
-    }
+    newDate.setMonth(newDate.getMonth() - 1);
     this.viewDateChange.emit(newDate);
   }
   
-  onNextDay(): void {
+  onNextMonth(): void {
     const newDate = new Date(this.viewDate);
-    if (this.view === CalendarView.Month) {
-      newDate.setMonth(newDate.getMonth() + 1);
-    } else if (this.view === CalendarView.Week) {
-      newDate.setDate(newDate.getDate() + 7);
-    } else {
-      newDate.setDate(newDate.getDate() + 1);
-    }
+    newDate.setMonth(newDate.getMonth() + 1);
     this.viewDateChange.emit(newDate);
   }
   

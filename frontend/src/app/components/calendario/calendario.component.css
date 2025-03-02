@@ -1,33 +1,47 @@
 .calendar-container {
-    width: 100%;
-    height: 600px;
-    margin-top: 20px;
+    width: 90%; /* Aumenta el ancho del contenedor */
+    max-width: 1200px; /* Limita el ancho máximo */
+    height: 700px; /* Aumenta la altura del contenedor */
+    margin: 20px auto; /* Centra el contenedor horizontalmente */
     border-radius: 8px;
     overflow: hidden;
     background: linear-gradient(135deg, #f7f7f7, #ffffff);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   mwl-calendar-month-view {
-    height: 100%;
+    width: 100%; /* Asegura que el calendario ocupe todo el ancho del contenedor */
+    height: 100%; /* Asegura que el calendario ocupe todo el alto del contenedor */
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #ddd;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto; /* Permite el desplazamiento si el contenido es demasiado grande */
   }
-  
-  mwl-calendar-month-view:hover {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+
+  .cal-month-view {
+    width: 100%; /* Asegura que el calendario ocupe todo el ancho del contenedor */
+    height: 100%; /* Asegura que el calendario ocupe todo el alto del contenedor */
   }
   
   .cal-day-cell {
     border: 1px solid #f1f1f1;
     transition: all 0.2s ease;
-  }
-  
-  .cal-day-cell:hover {
-    background-color: rgba(30, 144, 255, 0.1);
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    min-width: 60px; /* Aumenta el tamaño mínimo */
+    min-height: 60px; /* Aumenta el tamaño mínimo */
+    aspect-ratio: 1; /* Hace que las celdas sean cuadradas */
   }
   
   .cal-header {
@@ -38,7 +52,7 @@
   }
   
   .cal-day-number {
-    font-size: 16px;
+    font-size: 18px; /* Aumenta el tamaño de la fuente */
     color: #333;
     font-weight: 600;
     transition: color 0.2s ease;
@@ -57,8 +71,8 @@
   
   /* Estilos para eventos online */
   .clase-online {
-    background-color: #0078D4; /* Color más intenso para el fondo */
-    color: white; /* Texto blanco para un buen contraste */
+    background-color: #0078D4;
+    color: white;
     border-left: 5px solid #005a8d;
     border-radius: 6px;
     padding: 5px 10px;
@@ -67,15 +81,15 @@
   
   .clase-online:hover {
     background-color: #005a8d;
-    color: #f0f0f0; /* Color más claro al pasar el mouse */
+    color: #f0f0f0;
     border-left: 5px solid #0078D4;
     transform: translateY(-2px);
   }
   
   /* Estilos para eventos presenciales */
   .clase-presencial {
-    background-color: #FF6F61; /* Fondo rojo suave */
-    color: white; /* Texto blanco para más contraste */
+    background-color: #FF6F61;
+    color: white;
     border-left: 5px solid #e04e3b;
     border-radius: 6px;
     padding: 5px 10px;
@@ -91,8 +105,8 @@
   
   /* Estilos para exámenes */
   .examen {
-    background-color: #FF4C4C; /* Rojo más brillante para destacar */
-    color: white; /* Texto blanco para contraste */
+    background-color: #FF4C4C;
+    color: white;
     border-left: 5px solid #e60000;
     border-radius: 6px;
     padding: 5px 10px;
@@ -105,4 +119,3 @@
     border-left: 5px solid #FF4C4C;
     transform: translateY(-2px);
   }
-  

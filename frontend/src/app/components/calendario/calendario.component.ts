@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { CalendarModule, DateAdapter, CalendarUtils, CalendarA11y, CalendarDateFormatter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CustomDateFormatter } from '../../providers/custom-date-formatter.provider';
+import { AuthService } from '../../services/auth.service';
+import { ProfesorService } from '../../services/profesor.service';
 
 
 @Component({
@@ -38,13 +40,15 @@ export class CalendarioComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();
   events: CalendarEvent[] = [];
-  weekStartsOn: number = 1; // 1 para lunes, 0 para domingo
-  activeDayIsOpen: boolean = false; // Inicialmente cerrado
+  weekStartsOn: number = 1;
+  activeDayIsOpen: boolean = false;
   selectedDate: Date | null = null;
 
   constructor(
     private estudianteService: EstudianteService,
     private examenService: ExamenService,
+    private profesorService: ProfesorService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -52,46 +56,77 @@ export class CalendarioComponent implements OnInit {
   }
 
   cargarEventos(): void {
-    const userId = 1; // ID de prueba, cámbialo dinámicamente
+    console.log(this.authService.getUser().tipo_usuario);
+    if (this.authService.getUser().tipo_usuario == "Estudiante") {
+      
+      this.estudianteService.getClasesByEstudianteId(this.authService.getUser().id).subscribe(clases => {
+        this.events.push(...clases.map(clase => {
+          let title = '';
+          let cssClass = '';
+  
+          if (clase.online) {
+            title = `Clase online: ${clase.online.titulo}`;
+            cssClass = 'clase-online';
+          } else if (clase.presencial) {
+            title = `Clase de ${clase.instrumento} ubicación: ${clase.presencial.ubicacion}`;
+            cssClass = 'clase-presencial';
+          }
+  
+          return {
+            title: title,
+            start: new Date(clase.fecha),
+            color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+            cssClass: cssClass,
+          };
+        }));
+      });
+  
+      this.examenService.getExamenesByEstudianteId(this.authService.getUser().id).subscribe(examenes => {
+        this.events.push(...examenes.map(examen => ({
+          title: `${examen.titulo} - ${examen.descripcion}`,
+          start: new Date(examen.fecha),
+          color: { primary: '#ff5733', secondary: '#FFDDC1' },
+          cssClass: 'examen',
+        })));
+      });
+    }
 
-    this.estudianteService.getClasesByEstudianteId(userId).subscribe(clases => {
-      this.events.push(...clases.map(clase => {
-        let title = '';
-        let cssClass = '';
+    else {
+      this.profesorService.getClasesByProfesorId(this.authService.getUser().tipo_usuario).subscribe(clases => {
+        this.events.push(...clases.map(clase => {
+          let title = '';
+          let cssClass = '';
+  
+          if (clase.online) {
+            title = `Clase online: ${clase.online.titulo}`;
+            cssClass = 'clase-online';
+          } else if (clase.presencial) {
+            title = `Clase de ${clase.instrumento} ubicación: ${clase.presencial.ubicacion}`;
+            cssClass = 'clase-presencial';
+          }
+  
+          return {
+            title: title,
+            start: new Date(clase.fecha),
+            color: { primary: '#1e90ff', secondary: '#D1E8FF' },
+            cssClass: cssClass,
+          };
+        }));
+      });
+  
+      this.examenService.getExamenesByProfesorId(this.authService.getUser().tipo_usuario).subscribe(examenes => {
+        this.events.push(...examenes.map(examen => ({
+          title: `${examen.titulo} - ${examen.descripcion}`,
+          start: new Date(examen.fecha),
+          color: { primary: '#ff5733', secondary: '#FFDDC1' },
+          cssClass: 'examen',
+        })));
+      });
+    }   
 
-        if (clase.online) {
-          title = `Clase online: ${clase.online.titulo}`;
-          cssClass = 'clase-online';
-        } else if (clase.presencial) {
-          title = `Clase de ${clase.instrumento} ubicación: ${clase.presencial.ubicacion}`;
-          cssClass = 'clase-presencial';
-        }
-
-        return {
-          title: title,
-          start: new Date(clase.fecha),
-          color: { primary: '#1e90ff', secondary: '#D1E8FF' },
-          cssClass: cssClass,
-        };
-      }));
-    });
-
-    this.examenService.getExamenesByEstudianteId(userId).subscribe(examenes => {
-      this.events.push(...examenes.map(examen => ({
-        title: `${examen.titulo} - ${examen.descripcion}`,
-        start: new Date(examen.fecha),
-        color: { primary: '#ff5733', secondary: '#FFDDC1' },
-        cssClass: 'examen',
-      })));
-    });
-
-    console.log(this.events);
   }
 
   onDayClick({ day }: { day: CalendarMonthViewDay }): void {
-    console.log('Día seleccionado:', day.date);
-    console.log('Eventos en este día:', day.events);
-  
     if (day.events.length > 0) {
       this.viewDate = day.date; // Cambiar la vista al día seleccionado
       this.selectedDate = day.date; // Guardar la fecha seleccionada

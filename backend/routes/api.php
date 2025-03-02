@@ -85,6 +85,8 @@ Route::get('/profesores/search', [UsuarioProfesorController::class, 'search']);
 Route::get('/profesores/{id}', [UsuarioProfesorController::class, 'show']);
 Route::get('/profesores/{id}/clases', [UsuarioProfesorController::class, 'getClasesByProfesor']);
 Route::get('/profesores/{id}/examenes', [UsuarioProfesorController::class, 'getExamenesById']);
+Route::get('/profesores/{id}/clases-online', [UsuarioProfesorController::class, 'getClasesOnlineByIdProfesor']);
+Route::get('/profesores/{id}/clases-presenciales', [UsuarioProfesorController::class, 'getClasesPresencialesByIdProfesor']);
 Route::patch('/profesores/{id}', [UsuarioProfesorController::class, 'update']);
 Route::delete('/profesores/{id}', [UsuarioProfesorController::class, 'destroy']);
 
